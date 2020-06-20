@@ -22,7 +22,9 @@ _Keep in mind that when working in a journal everything inside a `[ ]` entry sho
 
 ## Known Issues
 
-If your url has a \[ or \] in it it will break the module.
+* If your url has a \[ or \] in it it will break the module.
+
+* If the site disallows embedding in iframes the site will not work.
 
 ## Example
 

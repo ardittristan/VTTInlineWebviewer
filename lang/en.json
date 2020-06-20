@@ -1,7 +1,7 @@
 {
     "inlineView.button": "Webview",
     "inlineView.webviewers.name": "Containers",
-    "inlineView.webviewers.hint": "Add like ⋘ [https://google.com, Google, fab fa-google], [https://foundryvtt.com, Foundry] ⋙ Font Awesome icons are optional",
+    "inlineView.webviewers.hint": "Add like ⋘ [https://foundryvtt.com/api/, Foundry API, fas fa-code], [https://foundryvtt.com, Foundry] ⋙ Font Awesome icons are optional",
     "inlineView.useJournal.name": "Use journal",
     "inlineView.useJournal.hint": "Use a journal named \"Containers\" instead of the \"Containers\" setting.",
     "inlineView.webviewColor.name": "Background color",
