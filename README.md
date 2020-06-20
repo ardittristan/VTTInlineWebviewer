@@ -24,6 +24,10 @@ _Keep in mind that when working in a journal everything inside a `[ ]` entry sho
 
 If your url has a \[ or \] in it it will break the module.
 
+## Example
+
+![Preview](https://i.imgur.com/eL9AvGk.gif)
+
 ## Changelog
 
 Check the [Changelog](https://github.com/ardittristan/VTTInlineWebviewer/blob/master/CHANGELOG.md)
