@@ -96,7 +96,6 @@ Hooks.on("getSceneControlButtons", controls => {
             // if no icon, set default icon
             if (settingsVars[2] === undefined) { settingsVars[2] = "fas fa-external-link-alt"; }
             else if (settingsVars[2].trim().toLowerCase() === "none") { settingsVars[2] = "fas fa-external-link-alt"; }
-            console.error(settingsVars)
 
             // add to button list
             tools = tools.concat([{
