@@ -26,7 +26,7 @@ If your url has a \[ or \] in it it will break the module.
 
 ## Example
 
-![Preview](https://i.imgur.com/eL9AvGk.gif)
+![Preview](https://i.imgur.com/5E36O9u.gif)
 
 ## Changelog
 
