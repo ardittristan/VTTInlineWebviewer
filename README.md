@@ -15,7 +15,7 @@ _If you don't include a font awesome icon it uses the <a href=""><img src="https
 Here is an example entry:  
 
 ```plaintext
-[https://google.com, Google, fab fa-google], [https://foundryvtt.com, Foundry]
+[https://foundryvtt.com/api/, Foundry API, fas fa-code], [https://foundryvtt.com, Foundry]
 ```  
 
 _Keep in mind that when working in a journal everything inside a `[ ]` entry should be on the same line._
