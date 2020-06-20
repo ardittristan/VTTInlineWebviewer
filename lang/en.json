@@ -1,0 +1,11 @@
+{
+    "inlineView.button": "Webview",
+    "inlineView.webviewers.name": "Containers",
+    "inlineView.webviewers.hint": "Add like ⋘ [https://google.com, Google, fab fa-google], [https://foundryvtt.com, Foundry] ⋙ Font Awesome icons are optional",
+    "inlineView.useJournal.name": "Use journal",
+    "inlineView.useJournal.hint": "Use a journal named \"Containers\" instead of the \"Containers\" setting.",
+    "inlineView.webviewColor.name": "Background color",
+    "inlineView.webviewColor.hint": "Changes the color of the webview background",
+    "inlineView.webviewColor.label": "Choose Color",
+    "inlineView.notifications.settingsError": "Something is wrong with the webview settings. Check your formatting."
+}
