@@ -78,6 +78,9 @@ Hooks.on("getSceneControlButtons", controls => {
             // get args for the setting
             const settingsVars = settings.split(",");
 
+            let compat = true;
+            if (settingsVars[3] === undefined) { compat = false; }
+
             // init webview
             let webView = new InlineViewer({
                 baseApplication: settingsVars[1].trim(),
@@ -86,11 +89,14 @@ Hooks.on("getSceneControlButtons", controls => {
                 height: 512,
                 minimizable: true,
                 title: settingsVars[1].trim(),
-                url: settingsVars[0].trim()
+                url: settingsVars[0].trim(),
+                compat: compat
             });
 
             // if no icon, set default icon
             if (settingsVars[2] === undefined) { settingsVars[2] = "fas fa-external-link-alt"; }
+            else if (settingsVars[2].trim().toLowerCase() === "none") { settingsVars[2] = "fas fa-external-link-alt"; }
+            console.error(settingsVars)
 
             // add to button list
             tools = tools.concat([{
@@ -134,7 +140,8 @@ class InlineViewer extends Application {
             resizable: true,
             popOut: true,
             shareable: false,
-            url: null
+            url: null,
+            compat: false
         });
         return options;
     }
@@ -144,6 +151,7 @@ class InlineViewer extends Application {
     async getData(options) {
         const data = super.getData(options);
         data.siteUrl = this.options.url;
+        data.compat = this.options.compat;
         return data;
     }
 }

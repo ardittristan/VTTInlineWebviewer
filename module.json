@@ -2,7 +2,7 @@
 	"name": "inlinewebviewer",
 	"title": "Inline Webviewer",
 	"description": "Have a webpage open inside Foundry, eg an easyzoom map.",
-	"version": "1.0.1",
+	"version": "1.1.0",
 	"author": "ardittristan#0001",
 	"esmodules": ["inlineviewer.js"],
 	"styles": ["./css/inlineviewer.css"],
