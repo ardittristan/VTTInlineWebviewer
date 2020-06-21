@@ -6,7 +6,7 @@ To install, import this [Manifest](https://raw.githubusercontent.com/ardittrista
 
 ## Usage
 
-To create a new webview, add an entry to the `Containers` setting, _or if you have the journal setting enabled a journal called_ `Containers`.  
+To create a new webview, add an entry to the `Containers` setting, _or if you have the journal setting enabled a journal with the name that you gave it in the settings._  
 An entry is formatted like this:
 
 `[<site url>, <button/window name>, <font awesome icon name (optional)>, <compability mode (optional)>]`  

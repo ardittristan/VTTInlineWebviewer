@@ -1,11 +1,14 @@
 {
     "inlineView.button": "Webview",
     "inlineView.webviewers.name": "Containers",
+    "inlineView.webviewers.privateName": "Private containers",
     "inlineView.webviewers.hint": "Add like ⋘ [https://foundryvtt.com/api/, Foundry API, fas fa-code], [https://foundryvtt.com, Foundry], [https://dndbeyond.com, DnDBeyond, none, true] ⋙ Font Awesome icons are optional, \"none\" sets it to default icon. 4th argument is compatibility mode, only use when normal mode doesn't work for the site.",
     "inlineView.useJournal.name": "Use journal",
-    "inlineView.useJournal.hint": "Use a journal named \"Containers\" instead of the \"Containers\" setting.",
+    "inlineView.useJournal.hint": "Use a journal instead of the \"Containers\" setting.",
     "inlineView.webviewColor.name": "Background color",
     "inlineView.webviewColor.hint": "Changes the color of the webview background",
     "inlineView.webviewColor.label": "Choose Color",
-    "inlineView.notifications.settingsError": "Something is wrong with the webview settings. Check your formatting."
+    "inlineView.notifications.settingsError": "Something is wrong with the webview settings. Check your formatting.",
+    "inlineView.journal.name": "Journal name",
+    "inlineView.journal.hint": "Name of the journal if you have journals enabled."
 }

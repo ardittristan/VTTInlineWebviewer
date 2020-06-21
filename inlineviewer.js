@@ -12,6 +12,28 @@ Hooks.once("init", () => {
         onChange: () => window.location.reload()
     });
 
+    game.settings.register("inlinewebviewer", "privateWebviewers", {
+        name: "inlineView.webviewers.privateName",
+        hint: "inlineView.webviewers.hint",
+        scope: "client",
+        config: true,
+        type: String,
+        restricted: true,
+        default: "",
+        onChange: () => window.location.reload()
+    });
+
+    game.settings.register("inlinewebviewer", "journalName", {
+        name: "inlineView.journal.name",
+        hint: "inlineView.journal.hint",
+        scope: "world",
+        config: true,
+        type: String,
+        restricted: true,
+        default: "Containers",
+        onChange: () => window.location.reload()
+    });
+    
     game.settings.register("inlinewebviewer", "useJournal", {
         name: "inlineView.useJournal.name",
         hint: "inlineView.useJournal.hint",
@@ -47,7 +69,7 @@ Hooks.on("renderInlineViewer", (inlineViewer) => {
 
 Hooks.on("updateJournalEntry", (journal) => {
     if (game.settings.get("inlinewebviewer", "useJournal")) {
-        if (journal.data.name === "Containers" || journal.data.name === "containers") {
+        if (journal.data.name === game.settings.get("inlinewebviewer", "journalName") || journal.data.name === "Containers") {
             window.location.reload();
         }
     }
@@ -56,10 +78,14 @@ Hooks.on("updateJournalEntry", (journal) => {
 Hooks.on("getSceneControlButtons", controls => {
     /** @type {String} */
     let settingsString;
+    let privateSettingsString = game.settings.get("inlinewebviewer", "privateWebviewers");
+
+    console.log(privateSettingsString)
+
     if (!game.settings.get("inlinewebviewer", "useJournal")) {
         settingsString = game.settings.get("inlinewebviewer", "webviewers");
     } else {
-        const journal = game.journal.getName("Containers" || "containers");
+        const journal = game.journal.getName(game.settings.get("inlinewebviewer", "journalName") || "Containers");
         if (journal == undefined) { return; }
         settingsString = journal.data.content;
     }
@@ -70,7 +96,13 @@ Hooks.on("getSceneControlButtons", controls => {
     let tools = [];
 
     // get seperate arrays of sites
+    /** @type {String[]} */
     let settingsArray = settingsString.match(/\[.*?\]/g);
+    if (privateSettingsString.length != 0) {
+        settingsArray = settingsArray.concat(privateSettingsString.match(/\[.*?\]/g));
+        console.log(privateSettingsString.match(/\[.*?\]/g))
+        console.log(settingsArray)
+    }
     try {
         for (let settings of settingsArray) {
             settings = settings.replace(/\[|\]/g, "");
@@ -107,7 +139,7 @@ Hooks.on("getSceneControlButtons", controls => {
             }]);
         }
     } catch{
-        if (game.user.isGM) {
+        if (game.user.isGM || privateSettingsString.length != 0) {
             ui.notifications.info(game.i18n.localize("inlineView.notifications.settingsError"));
         }
     }
