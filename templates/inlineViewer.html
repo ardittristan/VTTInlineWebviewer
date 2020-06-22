@@ -1,24 +1,32 @@
 {{#if compat}}
 
-<script type="module" src="https://unpkg.com/x-frame-bypass"></script>
+<div class="frame" style="min-height: calc(100% - 10px);">
+    <iframe
+        is="x-frame-bypass"
+        id="inlineViewer"
+        width="100%"
+        height="100%"
+        src="https://cors-anywhere.ardittristan.xyz:9123/vtt/{{siteUrl}}"
+        style="border: none;">
+    </iframe>
+</div>
 
-<iframe
-    is="x-frame-bypass"
-    id="inlineViewer"
-    width="100%"
-    height="100%"
-    src="{{siteUrl}}"
-    style="border: none;">
-</iframe>
+<div id="footer" style="height: 10px; white-space: nowrap;">
+    <footer>
+        <i>Compability mode uses google analytics to prevent proxy abuse.</i>
+    </footer>
+</div>
 
 {{else}}
 
-<iframe
-    id="inlineViewer"
-    width="100%"
-    height="100%"
-    src="{{siteUrl}}"
-    style="border: none;">
-</iframe>
+<div class="frame">
+    <iframe
+        id="inlineViewer"
+        width="100%"
+        height="100%"
+        src="{{siteUrl}}"
+        style="border: none;">
+    </iframe>
+</div>
 
 {{/if}}

@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.3.0
+
+* Changed compability mode to work with more sites.
+
 ## Version 1.2.0
 
 * Added clientside setting so you can have personal windows.
