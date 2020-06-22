@@ -33,7 +33,7 @@ Hooks.once("init", () => {
         default: "Containers",
         onChange: () => window.location.reload()
     });
-    
+
     game.settings.register("inlinewebviewer", "useJournal", {
         name: "inlineView.useJournal.name",
         hint: "inlineView.useJournal.hint",
@@ -80,17 +80,21 @@ Hooks.on("getSceneControlButtons", controls => {
     let settingsString;
     let privateSettingsString = game.settings.get("inlinewebviewer", "privateWebviewers");
 
-    console.log(privateSettingsString)
-
     if (!game.settings.get("inlinewebviewer", "useJournal")) {
         settingsString = game.settings.get("inlinewebviewer", "webviewers");
     } else {
         const journal = game.journal.getName(game.settings.get("inlinewebviewer", "journalName") || "Containers");
-        if (journal == undefined) { return; }
-        settingsString = journal.data.content;
+        if (journal == undefined) {
+            if (privateSettingsString.length === 0) {
+                return;
+            }
+            settingsString = "";
+        } else {
+            settingsString = journal.data.content;
+        }
     }
     // check if settingsstring contains any value
-    if (settingsString === "") { return; }
+    if (settingsString.length === 0 && privateSettingsString.length === 0) { return; }
 
     // init tools array for buttons
     let tools = [];
@@ -99,9 +103,11 @@ Hooks.on("getSceneControlButtons", controls => {
     /** @type {String[]} */
     let settingsArray = settingsString.match(/\[.*?\]/g);
     if (privateSettingsString.length != 0) {
-        settingsArray = settingsArray.concat(privateSettingsString.match(/\[.*?\]/g));
-        console.log(privateSettingsString.match(/\[.*?\]/g))
-        console.log(settingsArray)
+        if (settingsArray === null) {
+            settingsArray = privateSettingsString.match(/\[.*?\]/g);
+        } else {
+            settingsArray = settingsArray.concat(privateSettingsString.match(/\[.*?\]/g));
+        }
     }
     try {
         for (let settings of settingsArray) {

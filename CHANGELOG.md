@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 1.3.1
+
+* Fix buttons for personal containers not showing up when there are no global containers.
+* Remove leftover debug console logs.
+
 ## Version 1.3.0
 
 * Changed compability mode to work with more sites.
