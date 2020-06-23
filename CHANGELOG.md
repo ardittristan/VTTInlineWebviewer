@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.3.2
+
+* Fixed some spelling and made analytics usage more clear for compatibility mode.
+
 ## Version 1.3.1
 
 * Fix buttons for personal containers not showing up when there are no global containers.

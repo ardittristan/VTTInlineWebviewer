@@ -2,7 +2,7 @@
     "inlineView.button": "Webview",
     "inlineView.webviewers.name": "Containers",
     "inlineView.webviewers.privateName": "Private containers",
-    "inlineView.webviewers.hint": "Add like ⋘ [https://foundryvtt.com/api/, Foundry API, fas fa-code], [https://foundryvtt.com, Foundry], [https://dndbeyond.com, DnDBeyond, none, true] ⋙ Font Awesome icons are optional, \"none\" sets it to default icon. 4th argument is compatibility mode, only use when normal mode doesn't work for the site. Compability mode uses analytics to prevent abuse.",
+    "inlineView.webviewers.hint": "Add like ⋘ [https://foundryvtt.com/api/, Foundry API, fas fa-code], [https://foundryvtt.com, Foundry], [https://dndbeyond.com, DnDBeyond, none, true] ⋙ Font Awesome icons are optional, \"none\" sets it to default icon. 4th argument is compatibility mode, only use when normal mode doesn't work for the site. 𝗖𝗼𝗺𝗽𝗮𝘁𝗶𝗯𝗶𝗹𝗶𝘁𝘆 𝗺𝗼𝗱𝗲 𝘂𝘀𝗲𝘀 𝗮𝗻𝗮𝗹𝘆𝘁𝗶𝗰𝘀 𝘁𝗼 𝗽𝗿𝗲𝘃𝗲𝗻𝘁 𝗮𝗯𝘂𝘀𝗲.",
     "inlineView.useJournal.name": "Use journal",
     "inlineView.useJournal.hint": "Use a journal instead of the \"Containers\" setting.",
     "inlineView.webviewColor.name": "Background color",
