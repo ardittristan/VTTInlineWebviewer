@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.3.3
+
+* Updated ColorPicker library to use module dependency instead of build in.
+
 ## Version 1.3.2
 
 * Fixed some spelling and made analytics usage more clear for compatibility mode.

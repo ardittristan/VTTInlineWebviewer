@@ -1,4 +1,8 @@
-import ColorSetting from "./lib/colorSetting.js";
+Hooks.once('ready', () => {
+    try{window.Ardittristan.ColorSetting.tester} catch {
+        ui.notifications.notify('Please make sure you have the "lib - ColorSettings" module installed', "error", {permanent: true});
+    }
+});
 
 Hooks.once("init", () => {
     game.settings.register("inlinewebviewer", "webviewers", {
@@ -45,7 +49,7 @@ Hooks.once("init", () => {
         onChange: () => window.location.reload()
     });
 
-    new ColorSetting("inlinewebviewer", "webviewColor", {
+    new window.Ardittristan.ColorSetting("inlinewebviewer", "webviewColor", {
         name: "inlineView.webviewColor.name",
         hint: "inlineView.webviewColor.hint",
         label: "inlineView.webviewColor.label",
