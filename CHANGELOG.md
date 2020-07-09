@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.3.4
+
+* Switched from google analytics to just logging domain names with compatibility mode to improve privacy while still being able to prevent abuse.
+
 ## Version 1.3.3
 
 * Updated ColorPicker library to use module dependency instead of build in.

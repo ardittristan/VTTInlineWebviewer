@@ -24,7 +24,7 @@ _Keep in mind that when working in a journal everything inside a `[ ]` entry sho
 
 ## Troubleshooting
 
-* If the site disallows embedding in iframes you can try enabling compatibility mode, compatibility mode might not fully fix the issue and uses analytics to prevent abuse.
+* If the site disallows embedding in iframes you can try enabling compatibility mode, compatibility mode might not fully fix the issue and logs domain names to prevent abuse.
 
 * If your url has a \[ or \] in it it will break the module.
 
