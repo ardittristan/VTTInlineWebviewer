@@ -8,19 +8,27 @@ Make sure you've also have the [ColorSettings](https://raw.githubusercontent.com
 
 ## Usage
 
+### As HUD button
+
 To create a new webview, add an entry to the `Containers` setting, _or if you have the journal setting enabled a journal with the name that you gave it in the settings._  
 An entry is formatted like this:
 
 <code>[\<site url\>, \<button\/window name\>, \<[font awesome](https://fontawesome.com/icons/code?style=solid) icon name \(optional\)\>, \<compatibility mode \(optional\)\>\]</code>  
-_If you don't include a font awesome icon or name it `none` it uses the <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/1147d199a35293b391152ee85e2d30988439157f/svgs/solid/external-link-alt.svg" alt="" height="16" /></a> icon._
+_If you don't include a font awesome icon or name it `none` it uses the <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/external-link-alt.svg" alt="" height="16" /></a> icon._
 
 Here is an example entry:  
 
 ```plaintext
 [https://foundryvtt.com/api/, Foundry API, fas fa-code], [https://foundryvtt.com, Foundry], [https://dndbeyond.com, DnDBeyond, none, true]
-```  
+```
 
 _Keep in mind that when working in a journal everything inside a `[ ]` entry should be on the same line._
+
+All webviews appear on the left HUD under the <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/window-maximize.svg" alt="" height="16" /></a> menu.
+
+### When sending popup as GM
+
+For GMs, a <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/upload.svg" alt="" height="16" /></a> should be visible in the <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/window-maximize.svg" alt="" height="16" /></a> menu. If clicked on, the GM can enter an url. This url will pop up on the screen of all players inside a webviewer.
 
 ## Troubleshooting
 

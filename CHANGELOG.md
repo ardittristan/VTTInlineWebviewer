@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.4.0
+
+* Added the ability for the gm to send an url to open up at all players.
+
 ## Version 1.3.4
 
 * Switched from google analytics to just logging domain names with compatibility mode to improve privacy while still being able to prevent abuse.

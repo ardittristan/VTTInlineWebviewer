@@ -1,6 +1,6 @@
 Hooks.once('ready', () => {
-    try{window.Ardittristan.ColorSetting.tester} catch {
-        ui.notifications.notify('Please make sure you have the "lib - ColorSettings" module installed', "error", {permanent: true});
+    try { window.Ardittristan.ColorSetting.tester; } catch {
+        ui.notifications.notify('Please make sure you have the "lib - ColorSettings" module installed', "error", { permanent: true });
     }
 });
 
@@ -47,6 +47,29 @@ Hooks.once("init", () => {
         restricted: true,
         default: false,
         onChange: () => window.location.reload()
+    });
+
+    game.settings.register("inlinewebviewer", "sendUrl", {
+        scope: "world",
+        config: false,
+        type: String,
+        default: "",
+        onChange: (text) => {
+            if (text.length != 0) {
+                let vars = text.split("]");
+                let webView = new InlineViewer({
+                    baseApplication: "GM Popup",
+                    classes: ["GM-Popup"],
+                    width: 512,
+                    height: 512,
+                    minimizable: true,
+                    title: "GM Popup",
+                    url: vars[0],
+                    compat: (vars[1] === "true")
+                });
+                webView.render(true);
+            }
+        }
     });
 
     new window.Ardittristan.ColorSetting("inlinewebviewer", "webviewColor", {
@@ -114,6 +137,19 @@ Hooks.on("getSceneControlButtons", controls => {
         }
     }
     try {
+        // add gm option to send url to everyone
+        if (game.user.isGM) {
+            tools = tools.concat([{
+                name: "Send url to players",
+                title: "Send url to Players",
+                icon: "fas fa-upload",
+                button: true,
+                onClick: () => {
+                    new UrlShareDialog().render(true);
+                }
+            }]);
+        }
+
         for (let settings of settingsArray) {
             settings = settings.replace(/\[|\]/g, "");
 
@@ -148,7 +184,7 @@ Hooks.on("getSceneControlButtons", controls => {
                 onClick: () => webView.render(true)
             }]);
         }
-    } catch{
+    } catch {
         if (game.user.isGM || privateSettingsString.length != 0) {
             ui.notifications.info(game.i18n.localize("inlineView.notifications.settingsError"));
         }
@@ -195,4 +231,63 @@ class InlineViewer extends Application {
         data.compat = this.options.compat;
         return data;
     }
+}
+
+class UrlShareDialog extends Application {
+    constructor(src, options = {}) {
+        super(src, options);
+        this.objects = new PIXI.Container();
+
+        /** @type {HTMLElement} */
+        this.form = null;
+    }
+
+    static get defaultOptions() {
+        const options = super.defaultOptions;
+
+        mergeObject(options, {
+            template: "modules/inlinewebviewer/templates/urlShareDialog.html",
+            baseApplication: "UrlShareDialog",
+            classes: ["webviewer-dialog"],
+            minimizable: false,
+            title: "Send url",
+            editable: true,
+            resizable: false,
+            popOut: true,
+            shareable: false
+        });
+
+        return options;
+    }
+
+    async _renderInner(...args) {
+        const html = await super._renderInner(...args);
+        this.form = html[0];
+        return html;
+    }
+
+    activateListeners(html) {
+        super.activateListeners(html);
+        this.form.onsubmit = (e) => {
+            e.preventDefault();
+
+            /** @type {string} */
+            let url = jQuery(e.target).find("#shareUrl").prop("value");
+            /** @type {boolean} */
+            let compat = jQuery(e.target).find("#compat").prop("checked");
+
+            this.close();
+
+            game.settings.set("inlinewebviewer", "sendUrl", url + "]" + String(compat));
+            setTimeout(() => {
+                game.settings.set("inlinewebviewer", "sendUrl", "");
+            }, 1000);
+        };
+        this.form.onreset = (e) => {
+            e.preventDefault();
+
+            this.close();
+        };
+    }
+
 }
