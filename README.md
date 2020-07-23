@@ -1,4 +1,4 @@
-![GitHub Releases](https://img.shields.io/github/downloads/ardittristan/VTTInlineWebviewer/latest/total)
+![GitHub All Releases](https://img.shields.io/github/downloads/ardittristan/VTTInlineWebviewer/total)
 
 # Inline Webviewer
 
