@@ -1,3 +1,5 @@
+![GitHub All Releases](https://img.shields.io/github/downloads/ardittristan/VTTInlineWebviewer/total)
+
 # Inline Webviewer
 
 ## Installation
