@@ -1,4 +1,4 @@
-![GitHub All Releases](https://img.shields.io/github/downloads/ardittristan/VTTInlineWebviewer/total)
+![GitHub All Releases](https://img.shields.io/badge/dynamic/json?color=green&label=downloads&query=*&url=http%3A%2F%2Faws.ardittristan.xyz%3A9756%2FdownloadCount%2FVTTInlineWebviewer)
 
 # Inline Webviewer
 
