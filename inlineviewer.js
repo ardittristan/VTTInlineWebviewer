@@ -1,9 +1,3 @@
-Hooks.once('ready', () => {
-    try { window.Ardittristan.ColorSetting.tester; } catch {
-        ui.notifications.notify('Please make sure you have the "lib - ColorSettings" module installed', "error", { permanent: true });
-    }
-});
-
 Hooks.once("init", () => {
     game.settings.register("inlinewebviewer", "webviewers", {
         name: "inlineView.webviewers.name",
@@ -72,14 +66,26 @@ Hooks.once("init", () => {
         }
     });
 
-    new window.Ardittristan.ColorSetting("inlinewebviewer", "webviewColor", {
-        name: "inlineView.webviewColor.name",
-        hint: "inlineView.webviewColor.hint",
-        label: "inlineView.webviewColor.label",
-        restricted: false,
-        defaultColor: "#383838a1",
-        scope: "client"
-    });
+    if (typeof window?.Ardittristan?.ColorSetting === "function") {
+        new window.Ardittristan.ColorSetting("inlinewebviewer", "webviewColor", {
+            name: "inlineView.webviewColor.name",
+            hint: "inlineView.webviewColor.hint",
+            label: "inlineView.webviewColor.label",
+            restricted: false,
+            defaultColor: "#383838a1",
+            scope: "client"
+        });
+    } else {
+        game.settings.register("inlinewebviewer", "webviewColor", {
+            name: "inlineView.webviewColor.name",
+            hint: "inlineView.webviewColor.hint",
+            restricted: false,
+            default: "#383838a1",
+            type: String,
+            scope: "client",
+            config: true
+        })
+    }
 });
 
 Hooks.on("renderInlineViewer", (inlineViewer) => {

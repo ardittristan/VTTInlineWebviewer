@@ -11,12 +11,12 @@ jobs:
       shell: bash
       id: get-version
       run: echo "::set-output name=version::$(node ./.github/workflows/get-version.js)"
-    - run: zip -r ./inline-viewer.zip module.json inlineviewer.js css/ lang/ templates/                                      # Add folders/files here
+    - run: zip -r ./inline-viewer.zip module.json inlineviewer.js css/ lang/ templates/ lib/                                      # Add folders/files here
     - name: Create Release                                # Create an additional release for this version
       id: create_versioned_release
       uses: ncipollo/release-action@v1
       with:
-        allowUpdates: true # set to false if you do not want to allow updates on existing releases
+        allowUpdates: false # set to false if you do not want to allow updates on existing releases
         name: Release ${{ steps.get-version.outputs.version }} # Use the version in the name
         draft: false
         prerelease: false

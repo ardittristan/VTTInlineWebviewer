@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.4.1
+
+* Make module work without colorsettings lib.
+
 ## Version 1.4.0
 
 * Added the ability for the gm to send an url to open up at all players.
