@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.4.2
+
+* Push compatible core version.
+
 ## Version 1.4.1
 
 * Make module work without colorsettings lib.
