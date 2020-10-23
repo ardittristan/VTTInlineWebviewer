@@ -1,5 +1,11 @@
 # Patch Notes
 
+## Version 1.4.3
+
+* Fix html incompatible characters being encoded by handlebars.
+* Add ability to share url via macro.
+* Add forgotten localization.
+
 ## Version 1.4.2
 
 * Push compatible core version.

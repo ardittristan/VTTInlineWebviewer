@@ -33,6 +33,17 @@ All webviews appear on the left HUD under the <a href=""><img src="https://raw.g
 
 For GMs, a <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/upload.svg" alt="" height="16" /></a> should be visible in the <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/regular/window-maximize.svg" alt="" height="16" /></a> menu. If clicked on, the GM can enter an url. This url will pop up on the screen of all players inside a webviewer.
 
+&nbsp;  
+You can also use this in a macro, it functions the same as the popup, but can be called as a function:
+
+```js
+// without compatibility mode
+window.Ardittristan.InlineViewer.sendUrl("https://google.com");
+
+// with compatibility mode
+window.Ardittristan.InlineViewer.sendUrl("https://google.com", true);
+```
+
 ## Troubleshooting
 
 * If the site disallows embedding in iframes you can try enabling compatibility mode, compatibility mode might not fully fix the issue and logs domain names to prevent abuse.

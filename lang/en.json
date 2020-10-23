@@ -10,5 +10,7 @@
     "inlineView.webviewColor.label": "Choose Color",
     "inlineView.notifications.settingsError": "Something is wrong with the webview settings. Check your formatting.",
     "inlineView.journal.name": "Journal name",
-    "inlineView.journal.hint": "Name of the journal if you have journals enabled."
+    "inlineView.journal.hint": "Name of the journal if you have journals enabled.",
+    "inlineView.html.compatBox": "compatibility mode?",
+    "inlineView.html.compatDisclaimer": "Compatibility mode logs domain names to prevent proxy abuse."
 }

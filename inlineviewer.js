@@ -284,10 +284,8 @@ class UrlShareDialog extends Application {
 
             this.close();
 
-            game.settings.set("inlinewebviewer", "sendUrl", url + "]" + String(compat));
-            setTimeout(() => {
-                game.settings.set("inlinewebviewer", "sendUrl", "");
-            }, 1000);
+            this.sendUrl(url, compat)
+
         };
         this.form.onreset = (e) => {
             e.preventDefault();
@@ -296,4 +294,19 @@ class UrlShareDialog extends Application {
         };
     }
 
+    /**
+     * @param {String} url
+     * @param {boolean} [compat=false]
+     */
+    sendUrl(url, compat = false) {
+        game.settings.set("inlinewebviewer", "sendUrl", url + "]" + String(compat));
+        setTimeout(() => {
+            game.settings.set("inlinewebviewer", "sendUrl", "");
+        }, 1000);
+    }
+
 }
+
+window.Ardittristan = window.Ardittristan || {};
+window.Ardittristan.InlineViewer = window.Ardittristan.InlineViewer || {};
+window.Ardittristan.InlineViewer.sendUrl = UrlShareDialog.prototype.sendUrl;

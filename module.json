@@ -2,7 +2,7 @@
 	"name": "inlinewebviewer",
 	"title": "Inline Webviewer",
 	"description": "Have a webpage open inside Foundry, eg an easyzoom map.",
-	"version": "1.4.2",
+	"version": "1.4.3",
 	"author": "ardittristan#0001",
 	"esmodules": ["inlineviewer.js"],
     "scripts": ["./lib/colorSettingStub.js"],
