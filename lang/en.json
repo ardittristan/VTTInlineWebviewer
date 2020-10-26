@@ -12,5 +12,9 @@
   "inlineView.journal.name": "Journal name",
   "inlineView.journal.hint": "Name of the journal if you have journals enabled.",
   "inlineView.html.compatBox": "compatibility mode?",
-  "inlineView.html.compatDisclaimer": "Compatibility mode logs domain names to prevent proxy abuse."
+  "inlineView.html.compatDisclaimer": "Compatibility mode logs domain names to prevent proxy abuse.",
+  "inlineView.confirmExit.name": "Confirm Exit",
+  "inlineView.confirmExit.hint": "Show a confirmation prompt if you close a viewer window.",
+  "inlineView.confirmExit.title": "Are you sure?",
+  "inlineView.confirmExit.content": "Are you sure you want to close this view?"
 }

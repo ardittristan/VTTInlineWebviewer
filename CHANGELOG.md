@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.4.4
+
+* Add confirmation on closure of viewer.
+
 ## Version 1.4.3
 
 * Fix html incompatible characters being encoded by handlebars.

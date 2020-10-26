@@ -43,6 +43,16 @@ Hooks.once("init", () => {
     onChange: () => window.location.reload(),
   });
 
+  game.settings.register("inlinewebviewer", "confirmExit", {
+    name: "inlineView.confirmExit.name",
+    hint: "inlineView.confirmExit.hint",
+    scope: "client",
+    restricted: false,
+    config: true,
+    type: Boolean,
+    default: true,
+  });
+
   game.settings.register("inlinewebviewer", "sendUrl", {
     scope: "world",
     config: false,
@@ -245,6 +255,35 @@ class InlineViewer extends Application {
     data.siteUrl = this.options.url;
     data.compat = this.options.compat;
     return data;
+  }
+
+  /* -------------------------------------------- */
+  /**
+   * @override
+   * @private
+   */
+  _getHeaderButtons() {
+    return [
+      {
+        label: "Close",
+        class: "close",
+        icon: "fas fa-times",
+        onclick: (ev) => {
+          if (game.settings.get("inlinewebviewer", "confirmExit")) {
+            Dialog.confirm({
+              title: "inlineView.confirmExit.title",
+              content: `<p>${"inlineView.confirmExit.content"}</p>`,
+              yes: () => {
+                this.close();
+              },
+              defaultYes: false,
+            });
+          } else {
+            this.close();
+          }
+        },
+      },
+    ];
   }
 }
 
