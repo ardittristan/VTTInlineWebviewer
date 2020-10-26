@@ -271,8 +271,8 @@ class InlineViewer extends Application {
         onclick: (ev) => {
           if (game.settings.get("inlinewebviewer", "confirmExit")) {
             Dialog.confirm({
-              title: "inlineView.confirmExit.title",
-              content: `<p>${"inlineView.confirmExit.content"}</p>`,
+              title: game.i18n.localize("inlineView.confirmExit.title"),
+              content: `<p>${game.i18n.localize("inlineView.confirmExit.content")}</p>`,
               yes: () => {
                 this.close();
               },

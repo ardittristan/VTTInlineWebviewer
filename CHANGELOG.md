@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.4.5
+
+* Fix localization for confirmation.
+
 ## Version 1.4.4
 
 * Add confirmation on closure of viewer.
