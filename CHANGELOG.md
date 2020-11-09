@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.5.1
+
+* Add size parameters to macro function, non-macro functionality will come at a later date.
+
 ## Version 1.5.0
 
 * Add option to select users to send webview to via share dialog.

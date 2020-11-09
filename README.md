@@ -42,6 +42,9 @@ window.Ardittristan.InlineViewer.sendUrl("https://google.com");
 
 // with compatibility mode
 window.Ardittristan.InlineViewer.sendUrl("https://google.com", true);
+
+// with window dimensions
+window.Ardittristan.InlineViewer.sendUrl("https://google.com", true, 1920, 1080);
 ```
 
 ## Troubleshooting

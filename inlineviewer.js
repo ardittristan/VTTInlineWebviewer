@@ -66,8 +66,8 @@ Hooks.once("init", () => {
           let webView = new InlineViewer({
             baseApplication: "GM Popup",
             classes: ["GM-Popup"],
-            width: 512,
-            height: 512,
+            width: vars[2] || 512,
+            height: vars[3] || 512,
             minimizable: true,
             title: "GM Popup",
             url: vars[0],
@@ -390,8 +390,8 @@ class UrlShareDialog extends Application {
    * @param {String} url
    * @param {boolean} [compat=false]
    */
-  sendUrl(url, compat = false) {
-    game.settings.set("inlinewebviewer", "sendUrl", url + "]" + String(compat));
+  sendUrl(url, compat = false, w = 512, h = 512) {
+    game.settings.set("inlinewebviewer", "sendUrl", url + "]" + String(compat) + "]" + String(w) + "]" + String(h));
     setTimeout(() => {
       game.settings.set("inlinewebviewer", "sendUrl", "");
     }, 1000);
