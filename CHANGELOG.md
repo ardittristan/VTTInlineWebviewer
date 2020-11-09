@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 1.5.0
+
+* Add option to select users to send webview to via share dialog.
+* Add share button to viewer.
+
 ## Version 1.4.5
 
 * Fix localization for confirmation.

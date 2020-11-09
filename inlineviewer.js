@@ -60,20 +60,30 @@ Hooks.once("init", () => {
     default: "",
     onChange: (text) => {
       if (text.length != 0) {
-        let vars = text.split("]");
-        let webView = new InlineViewer({
-          baseApplication: "GM Popup",
-          classes: ["GM-Popup"],
-          width: 512,
-          height: 512,
-          minimizable: true,
-          title: "GM Popup",
-          url: vars[0],
-          compat: vars[1] === "true",
-        });
-        webView.render(true);
+        let userList = game.settings.get("inlinewebviewer", "sendUrlUsers")[0];
+        if (userList !== undefined || userList.length !== 0 || userList.includes(game.user._id)) {
+          let vars = text.split("]");
+          let webView = new InlineViewer({
+            baseApplication: "GM Popup",
+            classes: ["GM-Popup"],
+            width: 512,
+            height: 512,
+            minimizable: true,
+            title: "GM Popup",
+            url: vars[0],
+            compat: vars[1] === "true",
+          });
+          webView.render(true);
+        }
       }
     },
+  });
+
+  game.settings.register("inlinewebviewer", "sendUrlUsers", {
+    scope: "world",
+    config: false,
+    type: Array,
+    default: [],
   });
 
   if (typeof window?.Ardittristan?.ColorSetting === "function") {
@@ -264,25 +274,42 @@ class InlineViewer extends Application {
    */
   _getHeaderButtons() {
     return [
-      {
-        label: "Close",
-        class: "close",
-        icon: "fas fa-times",
-        onclick: (ev) => {
-          if (game.settings.get("inlinewebviewer", "confirmExit")) {
-            Dialog.confirm({
-              title: game.i18n.localize("inlineView.confirmExit.title"),
-              content: `<p>${game.i18n.localize("inlineView.confirmExit.content")}</p>`,
-              yes: () => {
-                this.close();
+      ...(() => {
+        if (game.user.isGM) {
+          return [
+            {
+              label: "Share",
+              class: "share",
+              icon: "fas fa-share-square",
+              onclick: (ev) => {
+                new UrlShareDialog({ url: this.options.url, compat: this.options.compat }).render(true);
               },
-              defaultYes: false,
-            });
-          } else {
-            this.close();
-          }
+            },
+          ];
+        }
+        return [];
+      })(),
+      ...[
+        {
+          label: "Close",
+          class: "close",
+          icon: "fas fa-times",
+          onclick: (ev) => {
+            if (game.settings.get("inlinewebviewer", "confirmExit")) {
+              Dialog.confirm({
+                title: game.i18n.localize("inlineView.confirmExit.title"),
+                content: `<p>${game.i18n.localize("inlineView.confirmExit.content")}</p>`,
+                yes: () => {
+                  this.close();
+                },
+                defaultYes: false,
+              });
+            } else {
+              this.close();
+            }
+          },
         },
-      },
+      ],
     ];
   }
 }
@@ -309,6 +336,8 @@ class UrlShareDialog extends Application {
       resizable: false,
       popOut: true,
       shareable: false,
+      url: "",
+      compat: false,
     });
 
     return options;
@@ -320,6 +349,14 @@ class UrlShareDialog extends Application {
     return html;
   }
 
+  async getData(options) {
+    const data = super.getData(options);
+    data.users = game.users.filter((user) => user.active);
+    data.url = this.options.url;
+    data.compat = this.options.compat;
+    return data;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
     this.form.onsubmit = (e) => {
@@ -329,6 +366,14 @@ class UrlShareDialog extends Application {
       let url = jQuery(e.target).find("#shareUrl").prop("value");
       /** @type {boolean} */
       let compat = jQuery(e.target).find("#compat").prop("checked");
+
+      let userList = jQuery(e.target)
+        .find("input[data-dtype=Checkbox]")
+        .toArray()
+        .filter((el) => el.checked)
+        .map((el) => el.dataset.userid);
+
+      game.settings.set("inlinewebviewer", "sendUrlUsers", userList);
 
       this.close();
 
