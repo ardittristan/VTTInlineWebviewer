@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 2.0.1
+
+* Hotfix remove localhost url.
+
 ## Version 2.0.0
 
 **Warning**: as this is a major version stuff might break, I recommend making a copy of this modules' settings.
