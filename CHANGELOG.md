@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 2.1.0
+
+* Add the new features to api and share dialog.
+* Fix some bugs.
+
 ## Version 2.0.1
 
 * Hotfix remove localhost url.

@@ -25,14 +25,16 @@ For GMs, a <a href=""><img src="https://raw.githubusercontent.com/FortAwesome/Fo
 You can also use this in a macro, it functions the same as the popup, but can be called as a function:
 
 ```js
-// without compatibility mode
-window.Ardittristan.InlineViewer.sendUrl("https://google.com");
-
-// with compatibility mode
-window.Ardittristan.InlineViewer.sendUrl("https://google.com", true);
-
-// with window dimensions
-window.Ardittristan.InlineViewer.sendUrl("https://google.com", true, 1920, 1080);
+/**
+ * @param {String} url - webview url
+ * @param {Boolean} compat - compatibility mode on or off
+ * @param {Number} w - width
+ * @param {Number} h - height
+ * @param {String} name - title of application
+ * @param {String} customCSS - css selectors for elements to be removed, comma seperated
+ * @param {String[]} userList - array of user id's to which the webview gets send, if empty it sends to everyone
+ */
+window.Ardittristan.InlineViewer.sendUrl(url, compat = false, w = 512, h = 512, name, customCSS, userList)
 ```
 
 ## Troubleshooting

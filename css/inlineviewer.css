@@ -6,6 +6,10 @@ section.window-content.inline-viewer {
   width: 100%;
 }
 
+.webviewer-dialog {
+  min-width: 400px;
+}
+
 #inline-webviewer-help img {
   border: none;
 }
@@ -17,7 +21,8 @@ section.window-content.inline-viewer {
   min-width: 400px;
 }
 
-#inline-viewer-settings .header-button.help .far {
+#inline-viewer-settings .header-button.help .far,
+.webviewer-dialog .header-button.help .far {
   margin-right: 3px;
 }
 
@@ -58,7 +63,8 @@ section.window-content.inline-viewer {
   margin-right: 8px;
 }
 
-#inline-viewer-settings textarea {
+#inline-viewer-settings textarea,
+.webviewer-dialog textarea {
   resize: vertical;
   border: 1px solid #7a7971;
   font-family: inherit;
@@ -66,17 +72,20 @@ section.window-content.inline-viewer {
   padding: 1px 3px;
 }
 
-#inline-viewer-settings textarea::placeholder {
+#inline-viewer-settings textarea::placeholder,
+.webviewer-dialog textarea::placeholder {
   color: #4b4a44;
   opacity: 1;
 }
 
-#inline-viewer-settings textarea:focus {
+#inline-viewer-settings textarea:focus,
+.webviewer-dialog textarea:focus {
   outline: none;
   box-shadow: 0 0 5px red;
 }
 
-#inline-viewer-settings textarea[id$=CustomCSS] {
+#inline-viewer-settings textarea[id$=CustomCSS],
+.webviewer-dialog textarea#shareCustomCSS {
   width: calc(100% - 2px);
   display: var(--compatDisplay);
 }
@@ -87,22 +96,26 @@ section.window-content.inline-viewer {
   width: 100%;
 }
 
-#inline-viewer-settings .settingsContainer .fields {
+#inline-viewer-settings .settingsContainer .fields,
+.webviewer-dialog .input {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-#inline-viewer-settings .settingsContainer .fields input {
+#inline-viewer-settings .settingsContainer .fields input,
+.webviewer-dialog .input input {
   margin-bottom: 2px;
 }
 
-#inline-viewer-settings .settingsContainer .fields > div {
+#inline-viewer-settings .settingsContainer .fields > div,
+.webviewer-dialog .input > div {
   display: flex;
   padding-right: 2px;
 }
 
-#inline-viewer-settings .settingsContainer .fields > div input:not(:last-child) {
+#inline-viewer-settings .settingsContainer .fields > div input:not(:last-child),
+.webviewer-dialog .input > div input:not(:last-child) {
   margin-right: 4px;
 }
 
@@ -110,7 +123,8 @@ section.window-content.inline-viewer {
   margin-bottom: 2px;
 }
 
-#inline-viewer-settings .settingsContainer .compatLabel {
+#inline-viewer-settings .settingsContainer .compatLabel,
+.webviewer-dialog .input .compatLabel {
   line-height: 24px;
 }
 

@@ -61,39 +61,6 @@ Hooks.once("init", () => {
     default: false,
   });
 
-  game.settings.register("inlinewebviewer", "sendUrl", {
-    scope: "world",
-    config: false,
-    type: String,
-    default: "",
-    onChange: (text) => {
-      if (text.length != 0) {
-        let userList = game.settings.get("inlinewebviewer", "sendUrlUsers")[0];
-        if (userList !== undefined || userList.length !== 0 || userList.includes(game.user._id)) {
-          let vars = text.split("|");
-          let webView = new InlineViewer({
-            baseApplication: "GM Popup",
-            classes: ["GM-Popup"],
-            width: vars[2] || 512,
-            height: vars[3] || 512,
-            minimizable: true,
-            title: "GM Popup",
-            url: vars[0],
-            compat: vars[1] === "true",
-          });
-          webView.render(true);
-        }
-      }
-    },
-  });
-
-  game.settings.register("inlinewebviewer", "sendUrlUsers", {
-    scope: "world",
-    config: false,
-    type: Array,
-    default: [],
-  });
-
   game.settings.registerMenu("inlinewebviewer", "worldSettings", {
     name: "inlineView.menus.global",
     label: "inlineView.menus.label",
@@ -154,6 +121,25 @@ Hooks.once("init", () => {
     element.each(function () {
       this.contentWindow.postMessage(this.dataset.customcss, "*");
     });
+  });
+
+  // socket
+  game.socket.on("module.inlinewebviewer", (data) => {
+    if (data.name && data.url) {
+      if (data.userList === undefined || data.userList.length === 0 || data.userList.includes(game.user._id)) {
+        new InlineViewer({
+          baseApplication: data.name.trim(),
+          classes: [data.name.trim().replace(" ", "-")],
+          width: data.width || 512,
+          height: data.height || 512,
+          minimizable: true,
+          title: game.i18n.localize("inlineView.gmShare.popup"),
+          url: data.url.trim(),
+          compat: data.compat || false,
+          customCSS: data.customcss,
+        }).render(true);
+      }
+    }
   });
 });
 
@@ -302,7 +288,13 @@ class InlineViewer extends Application {
               class: "share",
               icon: "fas fa-share-square",
               onclick: (ev) => {
-                new UrlShareDialog({ url: this.options.url, compat: this.options.compat }).render(true);
+                new UrlShareDialog({
+                  url: this.options.url,
+                  compat: this.options.compat,
+                  w: this.options.width,
+                  h: this.options.height,
+                  customCSS: this.options.customCSS,
+                }).render(true);
               },
             },
           ];
@@ -354,89 +346,136 @@ class HelpPopup extends Application {
   }
 }
 
-class UrlShareDialog extends Application {
-  constructor(src, options = {}) {
-    super(src, options);
-    this.objects = new PIXI.Container();
-
-    /** @type {HTMLElement} */
-    this.form = null;
+class UrlShareDialog extends FormApplication {
+  constructor(options) {
+    super({}, options);
   }
 
   static get defaultOptions() {
-    const options = super.defaultOptions;
-
-    mergeObject(options, {
+    return mergeObject(super.defaultOptions, {
       template: "modules/inlinewebviewer/templates/urlShareDialog.html",
       baseApplication: "UrlShareDialog",
       classes: ["webviewer-dialog"],
       minimizable: false,
       title: game.i18n.localize("inlineView.urlShare.title"),
       editable: true,
-      resizable: false,
+      resizable: true,
       popOut: true,
       shareable: false,
       url: "",
       compat: false,
+      w: 512,
+      h: 512,
+      name: undefined,
+      customCSS: "",
     });
-
-    return options;
-  }
-
-  async _renderInner(...args) {
-    const html = await super._renderInner(...args);
-    this.form = html[0];
-    return html;
   }
 
   async getData(options) {
     const data = super.getData(options);
+
     data.users = game.users.filter((user) => user.active);
     data.url = this.options.url;
     data.compat = this.options.compat;
+    data.name = this.options.name;
+    data.width = this.options.w;
+    data.height = this.options.h;
+    data.customcss = this.options.customCSS;
+
     return data;
   }
 
+  /** @param {JQuery} html */
   activateListeners(html) {
     super.activateListeners(html);
-    this.form.onsubmit = (e) => {
-      e.preventDefault();
 
-      /** @type {string} */
-      let url = jQuery(e.target).find("#shareUrl").prop("value");
-      /** @type {boolean} */
-      let compat = jQuery(e.target).find("#compat").prop("checked");
+    // textarea visibility according to compat
+    html.find("#shareCompat").on("click", function () {
+      if (this.checked) {
+        html.find(".input")[0].style.setProperty("--compatDisplay", "inline-block");
+      } else {
+        html.find(".input")[0].style.setProperty("--compatDisplay", "none");
+      }
+    });
 
-      let userList = jQuery(e.target)
-        .find("input[data-dtype=Checkbox]")
-        .toArray()
-        .filter((el) => el.checked)
-        .map((el) => el.dataset.userid);
+    // textarea visibility according to compat init
+    if (html.find("#shareCompat")[0].checked || false) {
+      html.find(".input")[0].style.setProperty("--compatDisplay", "inline-block");
+    } else {
+      html.find(".input")[0].style.setProperty("--compatDisplay", "none");
+    }
 
-      game.settings.set("inlinewebviewer", "sendUrlUsers", userList);
-
+    // close button
+    html.find("button[type=button]").on("click", () => {
       this.close();
-
-      this.sendUrl(url, compat);
-    };
-    this.form.onreset = (e) => {
-      e.preventDefault();
-
-      this.close();
-    };
+    });
   }
 
   /**
-   * @todo //TODO improve method of sending url to others
-   *
-   * @param {String} url
-   * @param {boolean} [compat=false]
+   * @param {Event} event
+   * @param {Object} formData
    */
-  sendUrl(url, compat = false, w = 512, h = 512) {
-    game.settings.set("inlinewebviewer", "sendUrl", url + "|" + String(compat) + "|" + String(w) + "|" + String(h));
-    setTimeout(() => {
-      game.settings.set("inlinewebviewer", "sendUrl", "");
-    }, 1000);
+  async _updateObject(event, formData) {
+    let userList = [];
+    Object.keys(formData).forEach((key) => {
+      if (formData[key] === true && key.includes("shareCheckbox")) {
+        userList.push(key.replace("shareCheckbox", ""));
+      }
+    });
+
+    this.close();
+
+    this.sendUrl(formData.shareUrl, formData.shareCompat, formData.shareWidth, formData.shareHeight, formData.shareName, formData.shareCustomCSS, userList);
+  }
+
+  /**
+   * @param {String} url
+   * @param {Boolean} compat
+   * @param {Number} w
+   * @param {Number} h
+   * @param {String} name
+   * @param {String} customCSS
+   * @param {String[]} userList
+   */
+  sendUrl(url, compat = false, w = 512, h = 512, name, customCSS, userList) {
+    game.socket.emit("module.inlinewebviewer", {
+      name: name,
+      url: url,
+      width: w,
+      height: h,
+      compat: compat,
+      customcss: customCSS,
+      userList: userList,
+    });
+    if (userList === undefined || userList.length === 0 || userList.includes(game.user._id)) {
+      new InlineViewer({
+        baseApplication: name.trim(),
+        classes: [name.trim().replace(" ", "-")],
+        width: w || 512,
+        height: h || 512,
+        minimizable: true,
+        title: game.i18n.localize("inlineView.gmShare.popup"),
+        url: url.trim(),
+        compat: compat || false,
+        customCSS: customCSS,
+      }).render(true);
+    }
+  }
+
+  _getHeaderButtons() {
+    return [
+      ...[
+        {
+          label: game.i18n.localize("inlineView.help.title"),
+          class: "help",
+          icon: "far fa-question-circle",
+          onclick: (ev) => {
+            new HelpPopup().render(true);
+          },
+        },
+      ],
+      ...super._getHeaderButtons(),
+    ];
   }
 }
 

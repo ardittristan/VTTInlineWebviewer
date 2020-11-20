@@ -40,7 +40,8 @@
       "tools": {
         "name": "Send url to players",
         "title": "Send url to players"
-      }
+      },
+      "popup": "GM Popup"
     },
     "headers": {
       "share": "Share"
@@ -70,11 +71,12 @@
         "compatWarn": "Do keep in mind that the proxy logs the urls visited to prevent abuse!",
         "removed": "Removed Elements",
         "removedDescA": "This textbox only appears if compat mode is on. Any css selector (eg",
-        "removedDescB": "you put in here will be hidden in the webviewer. This is because some things won't dissapear when compatibility mode is on because cookies don't work well with it."
-      },
-      "urlShare": {
-        "title": "Send url"
+        "removedDescB": "you put in here will be hidden in the webviewer. This is because some things won't dissapear when compatibility mode is on because cookies don't work well with it.",
+        "removeSeparator": "Selectors are seperated by commas!"
       }
+    },
+    "urlShare": {
+      "title": "Send url"
     },
     "settings": {
       "title": "Webviewer Settings",
