@@ -5,3 +5,139 @@ section.window-content.inline-viewer {
 .webviewer-dialog table tr td:last-of-type {
   width: 100%;
 }
+
+#inline-webviewer-help img {
+  border: none;
+}
+
+/* settings window */
+
+#inline-viewer-settings {
+  min-height: 216px;
+  min-width: 400px;
+}
+
+#inline-viewer-settings .header-button.help .far {
+  margin-right: 3px;
+}
+
+#inline-viewer-settings .buttonContainer {
+  display: flex;
+  position: absolute;
+  bottom: 8px;
+  width: calc(100% - 16px);
+  background: url(/ui/parchment.jpg) repeat;
+}
+
+#inline-viewer-settings .settingsContainer #newEntry,
+#inline-viewer-settings .settingsContainer #entryList .settingsEntry {
+  border: solid 1px #00000045;
+  background: #00000026;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+#inline-viewer-settings .settingsContainer #entryList {
+  flex-direction: column;
+}
+
+#inline-viewer-settings .settingsContainer #newEntry {
+  bottom: 46px;
+  width: calc(100% - 16px);
+  position: absolute;
+  background: url(/ui/parchment.jpg) repeat;
+}
+
+#inline-viewer-settings .settingsContainer .divider {
+  width: calc(100% + 16px);
+  height: 134px;
+  pointer-events: none;
+  margin-top: 4px;
+  border-top: 1px solid #7a7971;
+  margin-left: -8px;
+  margin-right: 8px;
+}
+
+#inline-viewer-settings textarea {
+  resize: vertical;
+  border: 1px solid #7a7971;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 1px 3px;
+}
+
+#inline-viewer-settings textarea::placeholder {
+  color: #4b4a44;
+  opacity: 1;
+}
+
+#inline-viewer-settings textarea:focus {
+  outline: none;
+  box-shadow: 0 0 5px red;
+}
+
+#inline-viewer-settings textarea[id$=CustomCSS] {
+  width: calc(100% - 2px);
+  display: var(--compatDisplay);
+}
+
+#inline-viewer-settings .settingsContainer > div,
+#inline-viewer-settings .settingsContainer > div .settingsEntry {
+  display: flex;
+  width: 100%;
+}
+
+#inline-viewer-settings .settingsContainer .fields {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#inline-viewer-settings .settingsContainer .fields input {
+  margin-bottom: 2px;
+}
+
+#inline-viewer-settings .settingsContainer .fields > div {
+  display: flex;
+  padding-right: 2px;
+}
+
+#inline-viewer-settings .settingsContainer .fields > div input:not(:last-child) {
+  margin-right: 4px;
+}
+
+#inline-viewer-settings .settingsContainer .settingsEntry:not(:last-child) {
+  margin-bottom: 2px;
+}
+
+#inline-viewer-settings .settingsContainer .compatLabel {
+  line-height: 24px;
+}
+
+#inline-viewer-settings .settingsContainer .buttons {
+  border-right: solid 1px #0000002e;
+  padding-right: 2px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  width: 31px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#inline-viewer-settings .settingsContainer .buttons button {
+  height: 26px;
+  width: 26px;
+  line-height: 22px;
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-weight: bold;
+}
+
+#inline-viewer-settings .settingsContainer .buttons .upButton,
+#inline-viewer-settings .settingsContainer .buttons .downButton {
+  font-size: medium;
+}
+
+#inline-viewer-settings .settingsContainer .buttons #addButton {
+  font-size: x-large;
+}

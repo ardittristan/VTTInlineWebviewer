@@ -1,46 +1,40 @@
+/** @type {Handlebars.Template} */
+let settingsEntry;
+const safeRegex = /[~!@$%^&*()+=,./';:"?><[\]\\{}|`# ]/g;
+
 Hooks.once("init", () => {
+  (async () => {
+    settingsEntry = await getTemplate("modules/inlinewebviewer/templates/partials/settingsEntry.html");
+  })();
+
   game.settings.register("inlinewebviewer", "webviewers", {
-    name: "inlineView.webviewers.name",
-    hint: "inlineView.webviewers.hint",
     scope: "world",
-    config: true,
+    config: false,
     type: String,
     restricted: true,
     default: "",
-    onChange: () => window.location.reload(),
   });
 
   game.settings.register("inlinewebviewer", "privateWebviewers", {
-    name: "inlineView.webviewers.privateName",
-    hint: "inlineView.webviewers.hint",
     scope: "client",
-    config: true,
+    config: false,
     type: String,
-    restricted: true,
     default: "",
-    onChange: () => window.location.reload(),
   });
 
-  game.settings.register("inlinewebviewer", "journalName", {
-    name: "inlineView.journal.name",
-    hint: "inlineView.journal.hint",
+  game.settings.register("inlinewebviewer", "webviewersNew", {
     scope: "world",
-    config: true,
-    type: String,
+    config: false,
+    type: Array,
     restricted: true,
-    default: "Containers",
-    onChange: () => window.location.reload(),
+    default: [],
   });
 
-  game.settings.register("inlinewebviewer", "useJournal", {
-    name: "inlineView.useJournal.name",
-    hint: "inlineView.useJournal.hint",
-    scope: "world",
-    config: true,
-    type: Boolean,
-    restricted: true,
-    default: false,
-    onChange: () => window.location.reload(),
+  game.settings.register("inlinewebviewer", "privateWebviewersNew", {
+    scope: "client",
+    config: false,
+    type: Array,
+    default: [],
   });
 
   game.settings.register("inlinewebviewer", "confirmExit", {
@@ -53,6 +47,20 @@ Hooks.once("init", () => {
     default: true,
   });
 
+  game.settings.register("inlinewebviewer", "localMigrate", {
+    scope: "client",
+    config: false,
+    type: Boolean,
+    default: false,
+  });
+
+  game.settings.register("inlinewebviewer", "worldMigrate", {
+    scope: "world",
+    config: false,
+    type: Boolean,
+    default: false,
+  });
+
   game.settings.register("inlinewebviewer", "sendUrl", {
     scope: "world",
     config: false,
@@ -62,7 +70,7 @@ Hooks.once("init", () => {
       if (text.length != 0) {
         let userList = game.settings.get("inlinewebviewer", "sendUrlUsers")[0];
         if (userList !== undefined || userList.length !== 0 || userList.includes(game.user._id)) {
-          let vars = text.split("]");
+          let vars = text.split("|");
           let webView = new InlineViewer({
             baseApplication: "GM Popup",
             classes: ["GM-Popup"],
@@ -86,6 +94,22 @@ Hooks.once("init", () => {
     default: [],
   });
 
+  game.settings.registerMenu("inlinewebviewer", "worldSettings", {
+    name: "inlineView.menus.global",
+    label: "inlineView.menus.label",
+    type: InlineSettingsApplication,
+    restricted: true,
+  });
+
+  game.settings.registerMenu("inlinewebviewer", "privateSettings", {
+    name: "inlineView.menus.private",
+    label: "inlineView.menus.label",
+    type: PrivateInlineSettingsApplication,
+    restricted: false,
+  });
+
+  //
+
   if (typeof window?.Ardittristan?.ColorSetting === "function") {
     new window.Ardittristan.ColorSetting("inlinewebviewer", "webviewColor", {
       name: "inlineView.webviewColor.name",
@@ -106,6 +130,31 @@ Hooks.once("init", () => {
       config: true,
     });
   }
+
+  // if old version update values
+  if (!game.settings.get("inlinewebviewer", "localMigrate")) {
+    migrateSettings("privateWebviewers");
+    game.settings.set("inlinewebviewer", "localMigrate", true);
+  }
+  Hooks.once("ready", () => {
+    if (game.user.isGM && !game.settings.get("inlinewebviewer", "worldMigrate")) {
+      migrateSettings("webviewersNew");
+      game.settings.set("inlinewebviewer", "worldMigrate", true);
+    }
+  });
+
+  // listen for iframes
+  window.addEventListener("message", (e) => {
+    if (typeof e.data !== "string") return;
+
+    let element = $(`iframe#${e.data}`);
+
+    if (!(element.length > 0)) return;
+
+    element.each(function () {
+      this.contentWindow.postMessage(this.dataset.customcss, "*");
+    });
+  });
 });
 
 Hooks.on("renderInlineViewer", (inlineViewer) => {
@@ -120,34 +169,12 @@ Hooks.on("renderInlineViewer", (inlineViewer) => {
   jQuery(".inline-viewer").css("background-color", game.settings.get("inlinewebviewer", "webviewColor"));
 });
 
-Hooks.on("updateJournalEntry", (journal) => {
-  if (game.settings.get("inlinewebviewer", "useJournal")) {
-    if (journal.data.name === game.settings.get("inlinewebviewer", "journalName") || journal.data.name === "Containers") {
-      window.location.reload();
-    }
-  }
-});
-
 Hooks.on("getSceneControlButtons", (controls) => {
-  /** @type {String} */
-  let settingsString;
-  let privateSettingsString = game.settings.get("inlinewebviewer", "privateWebviewers");
+  let privateSettings = game.settings.get("inlinewebviewer", "privateWebviewersNew")?.[0] || [];
+  let settings = game.settings.get("inlinewebviewer", "webviewersNew")?.[0] || [];
 
-  if (!game.settings.get("inlinewebviewer", "useJournal")) {
-    settingsString = game.settings.get("inlinewebviewer", "webviewers");
-  } else {
-    const journal = game.journal.getName(game.settings.get("inlinewebviewer", "journalName") || "Containers");
-    if (journal == undefined) {
-      if (privateSettingsString.length === 0) {
-        return;
-      }
-      settingsString = "";
-    } else {
-      settingsString = journal.data.content;
-    }
-  }
   // check if settingsstring contains any value
-  if (settingsString.length === 0 && privateSettingsString.length === 0) {
+  if (!game.user.isGM && settings.length === 0 && privateSettings.length === 0) {
     return;
   }
 
@@ -155,13 +182,11 @@ Hooks.on("getSceneControlButtons", (controls) => {
   let tools = [];
 
   // get seperate arrays of sites
-  /** @type {String[]} */
-  let settingsArray = settingsString.match(/\[.*?\]/g);
-  if (privateSettingsString.length != 0) {
-    if (settingsArray === null) {
-      settingsArray = privateSettingsString.match(/\[.*?\]/g);
+  if (privateSettings.length != 0) {
+    if (!(settings?.length > 0)) {
+      settings = privateSettings;
     } else {
-      settingsArray = settingsArray.concat(privateSettingsString.match(/\[.*?\]/g));
+      settings = settings.concat(privateSettings);
     }
   }
   try {
@@ -169,8 +194,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
     if (game.user.isGM) {
       tools = tools.concat([
         {
-          name: "Send url to players",
-          title: "Send url to Players",
+          name: game.i18n.localize("inlineView.gmShare.tools.name"),
+          title: game.i18n.localize("inlineView.gmShare.tools.title"),
           icon: "fas fa-upload",
           button: true,
           onClick: () => {
@@ -180,50 +205,41 @@ Hooks.on("getSceneControlButtons", (controls) => {
       ]);
     }
 
-    for (let settings of settingsArray) {
-      settings = settings.replace(/\[|\]/g, "");
-
-      // get args for the setting
-      const settingsVars = settings.split(",");
-
-      let compat = true;
-      if (settingsVars[3] === undefined) {
-        compat = false;
+    for (let setting of settings) {
+      if (!setting.name) {
+        setting.name = "Inline Webview";
       }
 
       // init webview
       let webView = new InlineViewer({
-        baseApplication: settingsVars[1].trim(),
-        classes: [settingsVars[1].trim().replace(" ", "-")],
-        width: 512,
-        height: 512,
+        baseApplication: setting.name.trim(),
+        classes: [setting.name.trim().replace(" ", "-")],
+        width: setting.width || 512,
+        height: setting.height || 512,
         minimizable: true,
-        title: settingsVars[1].trim(),
-        url: settingsVars[0].trim(),
-        compat: compat,
+        title: setting.name.trim(),
+        url: setting.url.trim(),
+        compat: setting.compat || false,
+        customCSS: setting.customcss,
       });
-
-      // if no icon, set default icon
-      if (settingsVars[2] === undefined) {
-        settingsVars[2] = "fas fa-external-link-alt";
-      } else if (settingsVars[2].trim().toLowerCase() === "none") {
-        settingsVars[2] = "fas fa-external-link-alt";
-      }
 
       // add to button list
       tools = tools.concat([
         {
-          name: settingsVars[1].trim(),
-          title: settingsVars[1].trim(),
-          icon: settingsVars[2].trim(),
+          name: setting.name.trim(),
+          title: setting.name.trim(),
+          icon: setting.icon || "fas fa-external-link-alt",
           button: true,
           onClick: () => webView.render(true),
         },
       ]);
     }
-  } catch {
-    if (game.user.isGM || privateSettingsString.length != 0) {
-      ui.notifications.info(game.i18n.localize("inlineView.notifications.settingsError"));
+  } catch (e) {
+    if (privateSettings.length != 0 || settings.length != 0) {
+      console.error(e);
+      Hooks.once("ready", () => {
+        ui.notifications.info(game.i18n.localize("inlineView.notifications.settingsError"));
+      });
     }
   }
 
@@ -241,6 +257,8 @@ class InlineViewer extends Application {
   constructor(src, options = {}) {
     super(src, options);
     this.objects = new PIXI.Container();
+    /** @type {Event} */
+    this.eventListener;
   }
   /* -------------------------------------------- */
   /** @override */
@@ -264,6 +282,8 @@ class InlineViewer extends Application {
     const data = super.getData(options);
     data.siteUrl = this.options.url;
     data.compat = this.options.compat;
+    data.safeUrl = this.options.url.match(/https?:\/\/.*?(\/|$)/)[0].replace(safeRegex, "");
+    data.customCSS = encodeURIComponent(this.options.customCSS);
     return data;
   }
 
@@ -278,7 +298,7 @@ class InlineViewer extends Application {
         if (game.user.isGM) {
           return [
             {
-              label: "Share",
+              label: game.i18n.localize("inlineView.headers.share"),
               class: "share",
               icon: "fas fa-share-square",
               onclick: (ev) => {
@@ -314,6 +334,26 @@ class InlineViewer extends Application {
   }
 }
 
+class HelpPopup extends Application {
+  static get defaultOptions() {
+    const options = super.defaultOptions;
+
+    mergeObject(options, {
+      id: "inline-webviewer-help",
+      template: "modules/inlinewebviewer/templates/helpPopup.html",
+      baseApplication: "inlineviewerHelp",
+      classes: ["sheet"],
+      title: game.i18n.localize("inlineView.help.title"),
+      popOut: true,
+      resizable: true,
+      width: 618,
+      height: 863,
+    });
+
+    return options;
+  }
+}
+
 class UrlShareDialog extends Application {
   constructor(src, options = {}) {
     super(src, options);
@@ -331,7 +371,7 @@ class UrlShareDialog extends Application {
       baseApplication: "UrlShareDialog",
       classes: ["webviewer-dialog"],
       minimizable: false,
-      title: "Send url",
+      title: game.i18n.localize("inlineView.urlShare.title"),
       editable: true,
       resizable: false,
       popOut: true,
@@ -387,15 +427,343 @@ class UrlShareDialog extends Application {
   }
 
   /**
+   * @todo //TODO improve method of sending url to others
+   *
    * @param {String} url
    * @param {boolean} [compat=false]
    */
   sendUrl(url, compat = false, w = 512, h = 512) {
-    game.settings.set("inlinewebviewer", "sendUrl", url + "]" + String(compat) + "]" + String(w) + "]" + String(h));
+    game.settings.set("inlinewebviewer", "sendUrl", url + "|" + String(compat) + "|" + String(w) + "|" + String(h));
     setTimeout(() => {
       game.settings.set("inlinewebviewer", "sendUrl", "");
     }, 1000);
   }
+}
+
+class InlineSettingsApplication extends FormApplication {
+  constructor(object, options) {
+    super(object, options);
+
+    this.settingIdentifier = "webviewersNew";
+
+    this.handleUp = this.handleUp.bind(this);
+    this.handleDown = this.handleDown.bind(this);
+  }
+
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      id: "inline-viewer-settings",
+      classes: ["sheet"],
+      template: "modules/inlinewebviewer/templates/settingsPopup.html",
+      resizable: true,
+      minimizable: false,
+      title: game.i18n.localize("inlineView.settings.title"),
+    });
+  }
+
+  async getData(options) {
+    const data = super.getData(options);
+    data.entries = game.settings.get("inlinewebviewer", this.settingIdentifier)?.[0] || [];
+
+    return data;
+  }
+
+  /**
+   * @param {JQuery} html
+   */
+  activateListeners(html) {
+    super.activateListeners(html);
+    const _this = this;
+
+    // submit button
+    html.find("button[type=submit]").on("click", () => {
+      let valid = true;
+      let values = []; //list of different values
+      html.find("input:text[id$=Name]").each(function () {
+        if (values.indexOf(this.value) >= 0) {
+          //if this value is already in the list, marks
+          html.find(this).css("border-color", "red");
+          valid = false;
+        } else {
+          html.find(this).css("border-color", ""); //clears since last check
+          values.push(this.value); //insert new value in the list
+        }
+      });
+      if (!valid) ui.notifications.warn(game.i18n.localize("inlineView.settings.duplicate"));
+      return valid;
+    });
+
+    // cancel button
+    html.find("button#cancelButton").on("click", () => {
+      this.close();
+    });
+
+    // add entry button logic
+    html.find("button#addButton").on("click", () => {
+      this.addEntry(html);
+    });
+
+    // textarea visibility according to compat
+    html.find("input[id$=Compat]").on("click", function () {
+      if (this.checked) {
+        this.closest(".fields").style.setProperty("--compatDisplay", "inline-block");
+      } else {
+        this.closest(".fields").style.setProperty("--compatDisplay", "none");
+      }
+    });
+
+    // textarea visibility according to compat init
+    html.find(".fields").each(function () {
+      let state = $(this).find("input[id$=Compat]")[0].checked || false;
+      if (state) {
+        this.style.setProperty("--compatDisplay", "inline-block");
+      } else {
+        this.style.setProperty("--compatDisplay", "none");
+      }
+    });
+
+    html.find("button.upButton").on("click", function () {
+      _this.handleUp(this);
+    });
+
+    html.find("button.downButton").on("click", function () {
+      _this.handleDown(this);
+    });
+
+    html.find("#newEntry input").on("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+
+        html.find("#newEntry #addButton").trigger("click");
+      }
+    });
+  }
+
+  /**
+   * @param {HTMLButtonElement} element
+   */
+  handleUp(element) {
+    let settingElement = element.closest(".settingsEntry");
+    /** @type {Number} */
+    let index = Array.prototype.indexOf.call(settingElement.parentElement.children, settingElement);
+
+    if (index === 0 || index === -1) return;
+
+    settingElement.getElementsByClassName("orderId")[0].value = Number(settingElement.getElementsByClassName("orderId")[0].value) - 1;
+    settingElement.previousElementSibling.getElementsByClassName("orderId")[0].value =
+      Number(settingElement.previousElementSibling.getElementsByClassName("orderId")[0].value) + 1;
+
+    settingElement.parentNode.insertBefore(settingElement, settingElement.previousElementSibling);
+  }
+
+  /**
+   * @param {HTMLButtonElement} element
+   */
+  handleDown(element) {
+    let settingElement = element.closest(".settingsEntry");
+    let index = Array.prototype.indexOf.call(settingElement.parentElement.children, settingElement);
+
+    if (index === settingElement.parentElement.children.length - 1 || index === -1) return;
+
+    settingElement.getElementsByClassName("orderId")[0].value = Number(settingElement.getElementsByClassName("orderId")[0].value) + 1;
+    settingElement.nextElementSibling.getElementsByClassName("orderId")[0].value =
+      Number(settingElement.nextElementSibling.getElementsByClassName("orderId")[0].value) - 1;
+
+    insertAfter(settingElement, settingElement.nextElementSibling);
+  }
+
+  /**
+   * @param {JQuery} html
+   */
+  addEntry(html) {
+    const _this = this;
+
+    /** @type {String} */
+    let name = html.find("#newEntry-Name")[0]?.value;
+    let safeName = name.replace(safeRegex, "");
+    /** @type {String} */
+    let url = html.find("#newEntry-Url")[0]?.value;
+    /** @type {Boolean} */
+    let compat = html.find("#newEntry-Compat")[0]?.checked;
+    /** @type {String} */
+    let icon = html.find("#newEntry-Icon")[0]?.value;
+    /** @type {Number} */
+    let width = html.find("#newEntry-Width")[0]?.value;
+    /** @type {Number} */
+    let height = html.find("#newEntry-Height")[0]?.value;
+    /** @type {String} */
+    let customCSS = html.find("#newEntry-CustomCSS")[0]?.value;
+    if (!this._validateEntry(safeName, url, html)) return;
+
+    // id
+    /** @type {Number} */
+    let id;
+    let lastEntry = html.find("#entryList > .settingsEntry").last();
+    if (lastEntry.length === 1) {
+      id = Number(lastEntry.find(".orderId")[0].value) + 1;
+    } else {
+      id = 1;
+    }
+
+    // make html from input
+    /** @type {String} */
+    let compiledTemplate = settingsEntry({
+      name: name,
+      safeName: safeName,
+      url: url,
+      compat: compat,
+      icon: icon,
+      width: width,
+      height: height,
+      customCSS: customCSS,
+      id: id,
+    });
+
+    html.find("#entryList").append(compiledTemplate);
+    let addedElement = html.find(`#${safeName}-Entry`);
+
+    // compat checkbox
+    addedElement.find("input[id$=Compat]").on("click", function () {
+      if (this.checked) {
+        addedElement[0].style.setProperty("--compatDisplay", "inline-block");
+      } else {
+        addedElement[0].style.setProperty("--compatDisplay", "none");
+      }
+    });
+
+    if (compat) {
+      addedElement[0].style.setProperty("--compatDisplay", "inline-block");
+    } else {
+      addedElement[0].style.setProperty("--compatDisplay", "none");
+    }
+
+    // empty boxes
+    html.find("#newEntry-Name")[0].value = "";
+    html.find("#newEntry-Url")[0].value = "";
+    html.find("#newEntry-Icon")[0].value = "";
+    html.find("#newEntry-Width")[0].value = "";
+    html.find("#newEntry-Height")[0].value = "";
+    html.find("#newEntry-CustomCSS")[0].value = "";
+
+    // up and down
+    addedElement.find("button.upButton").on("click", function () {
+      _this.handleUp(this);
+    });
+    addedElement.find("button.downButton").on("click", function () {
+      _this.handleDown(this);
+    });
+  }
+
+  /**
+   * @param {String} name
+   * @param {String} url
+   * @param {JQuery} html
+   */
+  _validateEntry(name, url, html) {
+    const pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+    let hasName = name?.length > 0;
+    let hasUrl = url?.length > 0 && pattern.test(url);
+
+    this._updateInputColor(hasName, html.find("#newEntry-Name")[0]);
+    this._updateInputColor(hasUrl, html.find("#newEntry-Url")[0]);
+
+    return hasName && hasUrl;
+  }
+
+  /**
+   * @param {Boolean} bool
+   * @param {HTMLElement} element
+   */
+  _updateInputColor(bool, element) {
+    element.style.border = bool ? "" : "2px solid red";
+  }
+
+  /**
+   * @param {Event} event
+   * @param {Object} formData
+   */
+  async _updateObject(event, formData) {
+    let settingsArray = [];
+
+    Object.keys(formData).forEach((key) => {
+      const array = key.split("-");
+      const prop = array.pop().toLowerCase();
+      const name = array.join("-");
+      const id = formData[name + "-Id"];
+
+      if (!settingsArray[id]) settingsArray[id] = {};
+
+      settingsArray[id][prop] = formData[key];
+    });
+
+    settingsArray.shift();
+
+    game.settings.set("inlinewebviewer", this.settingIdentifier, settingsArray);
+  }
+
+  _getHeaderButtons() {
+    return [
+      ...[
+        {
+          label: game.i18n.localize("inlineView.help.title"),
+          class: "help",
+          icon: "far fa-question-circle",
+          onclick: (ev) => {
+            new HelpPopup().render(true);
+          },
+        },
+      ],
+      ...super._getHeaderButtons(),
+    ];
+  }
+}
+
+class PrivateInlineSettingsApplication extends InlineSettingsApplication {
+  constructor(object, options) {
+    super(object, options);
+
+    this.settingIdentifier = "privateWebviewersNew";
+  }
+}
+
+/**
+ * @param {String} settingId
+ */
+function migrateSettings(settingId) {
+  let out = [];
+  const settingsString = game.settings.get("inlinewebviewer", settingId);
+
+  let settingsArray = settingsString.match(/\[.*?\]/g) || [];
+
+  let i = 0;
+  for (let settings of settingsArray) {
+    i++;
+    settings = settings.replace(/\<|\>/g, "");
+
+    // get args for the setting
+    const settingsVars = settings.split(",");
+
+    const settingsObject = {
+      id: i,
+      url: settingsVars?.[0],
+      name: settingsVars?.[1],
+      icon: settingsVars?.[2],
+      compat: settingsVars?.[3],
+    };
+
+    out.push(settingsObject);
+  }
+
+  game.settings.set("inlinewebviewer", settingId + "New", out);
+}
+
+/**
+ * @param {Element} newNode
+ * @param {Element} referenceElement
+ */
+function insertAfter(newNode, referenceElement) {
+  referenceElement.parentElement.insertBefore(newNode, referenceElement.nextElementSibling);
 }
 
 window.Ardittristan = window.Ardittristan || {};

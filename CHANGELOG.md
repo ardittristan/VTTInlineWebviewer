@@ -1,5 +1,18 @@
 # Patch Notes
 
+## Version 2.0.0
+
+**Warning**: as this is a major version stuff might break, I recommend making a copy of this modules' settings.
+
+* Revamped settings.
+* Added possibility to remove elements from containers using css selectors.
+
+&nbsp;  
+Todo:
+
+* Add new capabilities to "share" popup.
+* Add new capabilities to api.
+
 ## Version 1.5.1
 
 * Add size parameters to macro function, non-macro functionality will come at a later date.
