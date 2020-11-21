@@ -569,6 +569,10 @@ class InlineSettingsApplication extends FormApplication {
       _this.handleDown(this);
     });
 
+    html.find("button.deleteButton").on("click", function () {
+      _this.handleDelete(this, html);
+    });
+
     html.find("#newEntry input").on("keydown", (event) => {
       if (event.key === "Enter") {
         event.preventDefault();
@@ -576,6 +580,21 @@ class InlineSettingsApplication extends FormApplication {
         html.find("#newEntry #addButton").trigger("click");
       }
     });
+  }
+
+  /**
+   * @param {HTMLButtonElement} element
+   * @param {JQuery} html
+   */
+  handleDelete(element, html) {
+    const settingsElement = element.closest(".settingsEntry");
+    const thisId = Number(settingsElement.getElementsByClassName("orderId")[0].value);
+    html.find(".orderId").each(function () {
+      if (this.value > thisId) {
+        this.value--;
+      }
+    });
+    settingsElement.remove();
   }
 
   /**

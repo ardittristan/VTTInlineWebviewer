@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 2.2.0
+
+* Add remove button to settings, oops, kinda forgot about this one.
+* Make help images smaller in file size.
+
 ## Version 2.1.0
 
 * Add the new features to api and share dialog.
