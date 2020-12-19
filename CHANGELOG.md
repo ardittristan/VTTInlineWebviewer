@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 2.2.1
+
+* Fix module not working when installed fresh.
+* Fix not all data being saved in settings.
+
 ## Version 2.2.0
 
 * Add remove button to settings, oops, kinda forgot about this one.

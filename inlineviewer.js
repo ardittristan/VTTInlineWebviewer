@@ -753,6 +753,7 @@ class InlineSettingsApplication extends FormApplication {
       if (!settingsArray[id]) settingsArray[id] = {};
 
       settingsArray[id][prop] = formData[key];
+      if (!settingsArray[id].safename) settingsArray[id].safename = name.replace(safeRegex, "");
     });
 
     settingsArray.shift();
@@ -791,6 +792,8 @@ class PrivateInlineSettingsApplication extends InlineSettingsApplication {
 function migrateSettings(settingId) {
   let out = [];
   const settingsString = game.settings.get("inlinewebviewer", settingId);
+
+  if (!settingsString) return;
 
   let settingsArray = settingsString.match(/\[.*?\]/g) || [];
 

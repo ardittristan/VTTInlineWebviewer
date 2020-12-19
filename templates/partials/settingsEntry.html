@@ -1,5 +1,6 @@
 <div class="settingsEntry" id="{{this.safeName}}-Entry">
-  <input type="hidden" class="orderId" id="{{this.safeName}}-Id" name="{{this.name}}-Id" value="{{this.id}}" />
+  <input type="hidden" class="orderId" id="{{this.safeName}}{{this.safename}}-Id" name="{{this.name}}-Id" value="{{this.id}}" />
+  <input type="hidden" id="{{this.safeName}}{{this.safename}}-SafeName" name="{{this.name}}-SafeName" value="{{this.safeName}}{{this.safename}}" />
 
   <!-- buttons to change order -->
   <div class="buttons">
@@ -10,22 +11,22 @@
 
   <div class="fields">
     <div>
-      <input type="text" placeholder="{{localize "inlineView.html.settings.name"}}*" id="{{this.safeName}}-Name" name="{{this.name}}-Name" required value="{{this.name}}" />
+      <input type="text" placeholder="{{localize "inlineView.html.settings.name"}}*" id="{{this.safeName}}{{this.safename}}-Name" name="{{this.name}}-Name" required value="{{this.name}}" />
 
-      <label class="compatLabel" for="{{this.safeName}}-Compat">{{localize "inlineView.html.settings.compat"}}</label>
-      <input type="checkbox" id="{{this.safeName}}-Compat" name="{{this.name}}-Compat" title="{{localize "inlineView.html.settings.compatToggle"}}" {{checked this.compat}} />
+      <label class="compatLabel" for="{{this.safeName}}{{this.safename}}-Compat">{{localize "inlineView.html.settings.compat"}}</label>
+      <input type="checkbox" id="{{this.safeName}}{{this.safename}}-Compat" name="{{this.name}}-Compat" title="{{localize "inlineView.html.settings.compatToggle"}}" {{checked this.compat}} />
     </div>
 
-    <input type="text" placeholder="{{localize "inlineView.html.settings.url"}}*" id="{{this.safeName}}-Url" name="{{this.name}}-Url" required value="{{this.url}}" />
+    <input type="text" placeholder="{{localize "inlineView.html.settings.url"}}*" id="{{this.safeName}}{{this.safename}}-Url" name="{{this.name}}-Url" required value="{{this.url}}" />
 
     <div>
-      <input type="text" placeholder="{{localize "inlineView.html.settings.icon"}}" id="{{this.safeName}}-Icon" name="{{this.name}}-Icon" value="{{this.icon}}" />
+      <input type="text" placeholder="{{localize "inlineView.html.settings.icon"}}" id="{{this.safeName}}{{this.safename}}-Icon" name="{{this.name}}-Icon" value="{{this.icon}}" />
 
-      <input type="number" placeholder="{{localize "inlineView.html.settings.width"}}" id="{{this.safeName}}-Width" name="{{this.name}}-Width" value="{{this.width}}" />
+      <input type="number" placeholder="{{localize "inlineView.html.settings.width"}}" id="{{this.safeName}}{{this.safename}}-Width" name="{{this.name}}-Width" value="{{this.width}}" />
 
-      <input type="number" placeholder="{{localize "inlineView.html.settings.height"}}" id="{{this.safeName}}-Height" name="{{this.name}}-Height" value="{{this.height}}" />
+      <input type="number" placeholder="{{localize "inlineView.html.settings.height"}}" id="{{this.safeName}}{{this.safename}}-Height" name="{{this.name}}-Height" value="{{this.height}}" />
     </div>
 
-    <textarea placeholder="{{localize "inlineView.html.settings.removedElements"}}" id="{{this.safeName}}-CustomCSS" name="{{this.name}}-CustomCSS">{{this.customCSS}}{{this.customcss}}</textarea>
+    <textarea placeholder="{{localize "inlineView.html.settings.removedElements"}}" id="{{this.safeName}}{{this.safename}}-CustomCSS" name="{{this.name}}-CustomCSS">{{this.customCSS}}{{this.customcss}}</textarea>
   </div>
 </div>
