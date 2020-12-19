@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 2.2.3
+
+* Hotfix.
+
 ## Version 2.2.2
 
 * Add export to journal for compat with GM Screen.

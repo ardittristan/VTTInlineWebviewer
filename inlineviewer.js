@@ -846,7 +846,7 @@ function migrateSettings(settingId) {
   let out = [];
   const settingsString = game.settings.get("inlinewebviewer", settingId);
 
-  if (!settingsString) return;
+  if (typeof settingsString !== "string") return;
 
   let settingsArray = settingsString.match(/\[.*?\]/g) || [];
 
