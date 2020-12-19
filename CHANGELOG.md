@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 2.2.2
+
+* Add export to journal for compat with GM Screen.
+
 ## Version 2.2.1
 
 * Fix module not working when installed fresh.

@@ -31,6 +31,10 @@
       "title": "Are you sure?",
       "content": "Are you sure you want to close this view?"
     },
+    "confirmExport": {
+      "title": "Are you sure?",
+      "content": "Do you want to export this webview with it's current settings to a journal?"
+    },
     "menus": {
       "global": "Global Webviewers",
       "private": "Private Webviewers",
@@ -44,7 +48,8 @@
       "popup": "GM Popup"
     },
     "headers": {
-      "share": "Share"
+      "share": "Share",
+      "export": "Export"
     },
     "help": {
       "title": "Help",

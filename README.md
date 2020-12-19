@@ -37,6 +37,10 @@ You can also use this in a macro, it functions the same as the popup, but can be
 window.Ardittristan.InlineViewer.sendUrl(url, compat = false, w = 512, h = 512, name, customCSS, userList)
 ```
 
+### As a journal
+
+Webviewers can be exported to journals by gms with a button at the top of the popup. Do keep in mind that these journals do not update if you change the settings of the webviewer.
+
 ## Troubleshooting
 
 * If the site disallows embedding in iframes you can try enabling compatibility mode, compatibility mode might not fully fix the issue and logs domain names to prevent abuse.

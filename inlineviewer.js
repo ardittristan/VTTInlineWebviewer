@@ -242,6 +242,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
 class InlineViewer extends Application {
   constructor(src, options = {}) {
     super(src, options);
+    this._exportToJournal = this._exportToJournal.bind(this);
     this.objects = new PIXI.Container();
     /** @type {Event} */
     this.eventListener;
@@ -273,6 +274,44 @@ class InlineViewer extends Application {
     return data;
   }
 
+  _exportToJournal() {
+    const siteUrl = this.options.url;
+    const safeUrl = this.options.url.match(/https?:\/\/.*?(\/|$)/)[0].replace(safeRegex, "");
+    const customCSS = encodeURIComponent(this.options.customCSS);
+
+    JournalEntry.create(
+      {
+        name: safeUrl,
+        content: this.options.compat
+          ? `
+<p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
+  <iframe
+    is="x-frame-bypass"
+    id="${safeUrl}"
+    width="100%"
+    height="100%"
+    src="https://cors-anywhere.ardittristan.xyz:9123/vtt/${siteUrl}"
+    style="border: none;"
+    data-customcss="${customCSS}"
+  </iframe>
+</p>`
+          : `
+<p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
+  <iframe
+    id="${safeUrl}"
+    width="100%"
+    height="100%"
+    src="${siteUrl}"
+    style="border: none;"
+</p>
+`,
+      },
+      {
+        renderSheet: true,
+      }
+    );
+  }
+
   /* -------------------------------------------- */
   /**
    * @override
@@ -295,6 +334,20 @@ class InlineViewer extends Application {
                   h: this.options.height,
                   customCSS: this.options.customCSS,
                 }).render(true);
+              },
+            },
+            {
+              label: game.i18n.localize("inlineView.headers.export"),
+              class: "export",
+              icon: "fas fa-book",
+              onclick: (ev) => {
+                Dialog.confirm({
+                  title: game.i18n.localize("inlineView.confirmExport.title"),
+                  content: `<p>${game.i18n.localize("inlineView.confirmExport.content")}</p>`,
+                  yes: () => {
+                    this._exportToJournal();
+                  },
+                });
               },
             },
           ];
