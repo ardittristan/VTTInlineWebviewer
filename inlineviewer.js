@@ -271,6 +271,7 @@ class InlineViewer extends Application {
     data.compat = this.options.compat;
     data.safeUrl = this.options.url.match(/https?:\/\/.*?(\/|$)/)[0].replace(safeRegex, "");
     data.customCSS = encodeURIComponent(this.options.customCSS);
+    data.extensionInstalled = window.hasIframeCompatibility || false;
     return data;
   }
 
@@ -880,6 +881,20 @@ function insertAfter(newNode, referenceElement) {
   referenceElement.parentElement.insertBefore(newNode, referenceElement.nextElementSibling);
 }
 
+Hooks.once("ready", async () => {
+  if (window.hasIframeCompatibility) {
+    let manifest = await (
+      await fetch(
+        "https://cors-anywhere.ardittristan.workers.dev/corsproxy/?apiurl=https://raw.githubusercontent.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension/master/src/manifest.json"
+      )
+    ).json();
+    if (manifest?.version && manifest.version != window.inlineWebviewerExtensionVersion) {
+      ui.notifications.info(game.i18n.localize("inlineView.extension.newVersion") + ": " + manifest.version);
+    }
+  }
+});
+
+localStorage.setItem("isFoundry", "true");
 window.Ardittristan = window.Ardittristan || {};
 window.Ardittristan.InlineViewer = window.Ardittristan.InlineViewer || {};
 window.Ardittristan.InlineViewer.sendUrl = UrlShareDialog.prototype.sendUrl;

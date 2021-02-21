@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 2.2.4
+
+* Added [browser extension](https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension) support.
+
 ## Version 2.2.3
 
 * Hotfix.

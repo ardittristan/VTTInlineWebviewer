@@ -12,6 +12,7 @@
     "html": {
       "compatBox": "compatibility mode?",
       "compatDisclaimer": "Compatibility mode logs domain names to prevent proxy abuse.",
+      "extensionDisclaimer": "If compatibility mode doesn't work, try the <a target=\"_blank\" href=\"https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension\">extension</a>",
       "settings": {
         "compat": "Compat",
         "save": "Save",
@@ -86,6 +87,9 @@
     "settings": {
       "title": "Webviewer Settings",
       "duplicate": "Please do not use the same name twice."
+    },
+    "extension": {
+      "newVersion": "There is a new extension version available"
     }
   }
 }

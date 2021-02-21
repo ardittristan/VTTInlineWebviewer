@@ -44,6 +44,7 @@ Webviewers can be exported to journals by gms with a button at the top of the po
 ## Troubleshooting
 
 * If the site disallows embedding in iframes you can try enabling compatibility mode, compatibility mode might not fully fix the issue and logs domain names to prevent abuse.
+* Another option is to install [this browser extension](https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension), which works better than compatibility mode and doesn't log anything.
 
 ## Example
 
