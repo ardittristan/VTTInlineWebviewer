@@ -1,0 +1,39 @@
+name: VirusTotal
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '**.md'
+      - '**.yml'
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: VirusTotal Scan
+      id: virustotal-scan
+      uses: crazy-max/ghaction-virustotal@v2
+      with:
+        vt_api_key: ${{ secrets.VT_API_KEY }}
+        files: |
+          ./inlineviewer.js
+          ./templates/inlineViewer.html
+    - name: Replace Readme
+      shell: bash
+      run: node ./github/workflows/replace-url.js
+      env:
+        RESULTS: ${{ steps.virustotal-scan.outputs.analysis }}
+    - name: Git Commit and Push
+      uses: github-actions-x/commit@v2.7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        push-branch: 'master'
+        commit-message: 'Update VirusTotal links'
+        force-add: 'true'
+        files: README.md
+        name: GitHub Actions
+        email: actions@github.com

@@ -46,6 +46,8 @@ Webviewers can be exported to journals by gms with a button at the top of the po
 * If the site disallows embedding in iframes you can try enabling compatibility mode, compatibility mode might not fully fix the issue and logs domain names to prevent abuse.
 * Another option is to install [this browser extension](https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension), which works better than compatibility mode and doesn't log anything.
 
+* AVG and Avast flag the foundry module for iframe injection. This is probably because it utilizes iframes a lot. To still use the module you should whitelist <!-- insert_js_url_start -->[inlineviewer.js]()<!-- insert_js_url_end --> and <!-- insert_html_url_start -->[inlineViewer.html]()<!-- insert_html_url_end -->
+
 ## Example
 
 ![Preview](https://i.imgur.com/5E36O9u.gif)
