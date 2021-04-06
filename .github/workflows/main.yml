@@ -41,3 +41,8 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './module.json,./inline-viewer.zip'                                                                 # don't forget to rename module zip thing
         tag: latest
+    - name: Invoke push script
+      uses: benc-uk/workflow-dispatch@v1
+      with:
+        workflow: Push To Deploy
+        token: ${{ secrets.PERSONAL_TOKEN }}

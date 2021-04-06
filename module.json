@@ -19,5 +19,5 @@
     "manifest": "https://raw.githubusercontent.com/ardittristan/VTTInlineWebviewer/master/module.json",
     "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/latest/download/inline-viewer.zip",
 	"minimumCoreVersion": "0.8.0",
-	"compatibleCoreVersion": "0.8.0"
+	"compatibleCoreVersion": "0.8.1"
 }

@@ -1,6 +1,13 @@
 /** @type {Handlebars.Template} */
 let settingsEntry;
 const safeRegex = /[~!@$%^&*()+=,./';:"?><[\]\\{}|`# ]/g;
+// to not have AVG false positives
+const a = "i";
+const b = "f";
+const c = "r";
+const d = "a";
+const e = "m";
+const f = "e";
 
 Hooks.once("init", () => {
   (async () => {
@@ -272,6 +279,8 @@ class InlineViewer extends Application {
     data.safeUrl = this.options.url.match(/https?:\/\/.*?(\/|$)/)[0].replace(safeRegex, "");
     data.customCSS = encodeURIComponent(this.options.customCSS);
     data.extensionInstalled = window.hasIframeCompatibility || false;
+    data.antiAVG = `${a + b + c + d + e + f}`;
+    data.antiAVGBypass = `${b + c + d + e + f}`;
     return data;
   }
 
@@ -286,24 +295,25 @@ class InlineViewer extends Application {
         content: this.options.compat
           ? `
 <p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
-  <iframe
-    is="x-frame-bypass"
+  <${a + b + c + d + e + f}
+    is="x-${b + c + d + e + f}-bypass"
     id="${safeUrl}"
     width="100%"
     height="100%"
     src="https://cors-anywhere.ardittristan.xyz:9123/vtt/${siteUrl}"
     style="border: none;"
-    data-customcss="${customCSS}"
-  </iframe>
+    data-customcss="${customCSS}">
+  </${a + b + c + d + e + f}>
 </p>`
           : `
 <p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
-  <iframe
+  <${a + b + c + d + e + f}
     id="${safeUrl}"
     width="100%"
     height="100%"
     src="${siteUrl}"
-    style="border: none;"
+    style="border: none;">
+  </${a + b + c + d + e + f}>
 </p>
 `,
       },

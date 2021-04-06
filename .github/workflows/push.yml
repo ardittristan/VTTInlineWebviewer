@@ -1,0 +1,34 @@
+name: Push To Deploy
+on:
+  workflow_dispatch:
+
+# add this to action to run
+#
+# - name: Invoke push script
+#   uses: benc-uk/workflow-dispatch@v1
+#   with:
+#     workflow: Push To Deploy
+#     token: ${{ secrets.PERSONAL_TOKEN }}
+
+jobs:
+  push:
+    name: Push update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Create node Environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - name: Get Variables
+        shell: bash
+        id: get-variables
+        run: echo "::set-output name=module::$(node ./.github/workflows/get-inputs.js)"
+      - name: Trigger Deploy Workflow
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Deploy To Foundry
+          repo: ardittristan/FoundryUpdater
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          inputs: ${{ steps.get-variables.outputs.module }}

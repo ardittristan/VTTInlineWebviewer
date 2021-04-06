@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 3.0.0
+
+* 0.8.* compatibility.
+* Hopefully fix false virus scanner positives.
+
 ## Version 2.2.4
 
 * Added [browser extension](https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension) support.
