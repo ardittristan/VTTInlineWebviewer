@@ -163,8 +163,12 @@ Hooks.on("renderInlineViewer", (inlineViewer) => {
 });
 
 Hooks.on("getSceneControlButtons", (controls) => {
-  let privateSettings = game.settings.get("inlinewebviewer", "privateWebviewersNew") || [];
-  let settings = game.settings.get("inlinewebviewer", "webviewersNew") || [];
+  let privateSettings = game.data.version.includes("0.7.")
+    ? game.settings.get("inlinewebviewer", "privateWebviewersNew")?.[0] || []
+    : game.settings.get("inlinewebviewer", "privateWebviewersNew") || [];
+  let settings = game.data.version.includes("0.7.")
+    ? game.settings.get("inlinewebviewer", "webviewersNew")?.[0] || []
+    : game.settings.get("inlinewebviewer", "webviewersNew") || [];
 
   // check if settingsstring contains any value
   if (!game.user.isGM && settings.length === 0 && privateSettings.length === 0) {
@@ -566,7 +570,9 @@ class InlineSettingsApplication extends FormApplication {
 
   async getData(options) {
     const data = super.getData(options);
-    data.entries = game.settings.get("inlinewebviewer", this.settingIdentifier) || [];
+    data.entries = game.data.version.includes("0.7.")
+      ? game.settings.get("inlinewebviewer", this.settingIdentifier)?.[0] || []
+      : game.settings.get("inlinewebviewer", this.settingIdentifier) || [];
 
     return data;
   }

@@ -13,6 +13,7 @@
       "compatBox": "compatibility mode?",
       "compatDisclaimer": "Compatibility mode logs domain names to prevent proxy abuse.",
       "extensionDisclaimer": "If compatibility mode doesn't work, try the <a target=\"_blank\" href=\"https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension\">extension</a>",
+      "loginDisclaimer": "Logging in won't work sometimes, first try logging in while devtools (F12) is open, otherwise create an issue on the <a target=\"_blank\" href=\"https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension\">extension github</a>",
       "settings": {
         "compat": "Compat",
         "save": "Save",

@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 3.0.1
+
+* Re-add 0.7 compatibility.
+* Add extension docs.
+
 ## Version 3.0.0
 
 * 0.8.* compatibility.
