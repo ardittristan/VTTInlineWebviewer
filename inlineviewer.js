@@ -144,6 +144,7 @@ Hooks.once("init", () => {
           url: data.url.trim(),
           compat: data.compat || false,
           customCSS: data.customcss,
+          properties: data.properties
         }).render(true);
       }
     }
@@ -218,6 +219,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
         url: setting.url.trim(),
         compat: setting.compat || false,
         customCSS: setting.customcss,
+        properties: setting.properties
       });
 
       // add to button list
@@ -241,13 +243,23 @@ Hooks.on("getSceneControlButtons", (controls) => {
   }
 
   // create button list
-  controls.push({
-    name: "webviews",
-    title: "inlineView.button",
-    layer: "ControlsLayer",
-    icon: "far fa-window-maximize",
-    tools: tools,
-  });
+  if (game.data.version.includes("0.7.")) {
+    controls.push({
+      name: "webviews",
+      title: "inlineView.button",
+      layer: "ControlsLayer",
+      icon: "far fa-window-maximize",
+      tools: tools,
+    });
+  } else {
+    controls.push({
+      name: "webviews",
+      title: "inlineView.button",
+      layer: "controls",
+      icon: "far fa-window-maximize",
+      tools: tools,
+    });
+  }
 });
 
 class InlineViewer extends Application {
@@ -285,6 +297,7 @@ class InlineViewer extends Application {
     data.extensionInstalled = window.hasIframeCompatibility || false;
     data.antiAVG = `${a + b + c + d + e + f}`;
     data.antiAVGBypass = `${b + c + d + e + f}`;
+    data.properties = this.options.properties;
     return data;
   }
 
@@ -348,6 +361,7 @@ class InlineViewer extends Application {
                   w: this.options.width,
                   h: this.options.height,
                   customCSS: this.options.customCSS,
+                  properties: this.options.properties
                 }).render(true);
               },
             },
@@ -407,7 +421,7 @@ class HelpPopup extends Application {
       popOut: true,
       resizable: true,
       width: 618,
-      height: 863,
+      height: 950,
     });
 
     return options;
@@ -449,6 +463,7 @@ class UrlShareDialog extends FormApplication {
     data.width = this.options.w;
     data.height = this.options.h;
     data.customcss = this.options.customCSS;
+    data.properties = this.options.properties;
 
     return data;
   }
@@ -493,7 +508,7 @@ class UrlShareDialog extends FormApplication {
 
     this.close();
 
-    this.sendUrl(formData.shareUrl, formData.shareCompat, formData.shareWidth, formData.shareHeight, formData.shareName, formData.shareCustomCSS, userList);
+    this.sendUrl(formData.shareUrl, formData.shareCompat, formData.shareWidth, formData.shareHeight, formData.shareName, formData.shareCustomCSS, userList, formData.shareProperties);
   }
 
   /**
@@ -504,8 +519,9 @@ class UrlShareDialog extends FormApplication {
    * @param {String} name
    * @param {String} customCSS
    * @param {String[]} userList
+   * @param {String} properties
    */
-  sendUrl(url, compat = false, w = 512, h = 512, name, customCSS, userList) {
+  sendUrl(url, compat = false, w = 512, h = 512, name, customCSS, userList, properties) {
     game.socket.emit("module.inlinewebviewer", {
       name: name,
       url: url,
@@ -526,6 +542,7 @@ class UrlShareDialog extends FormApplication {
         url: url.trim(),
         compat: compat || false,
         customCSS: customCSS,
+        properties: properties
       }).render(true);
     }
   }
@@ -721,6 +738,8 @@ class InlineSettingsApplication extends FormApplication {
     let height = html.find("#newEntry-Height")[0]?.value;
     /** @type {String} */
     let customCSS = html.find("#newEntry-CustomCSS")[0]?.value;
+    /** @type {String} */
+    let properties = html.find("#newEntry-Properties")[0]?.value;
     if (!this._validateEntry(safeName, url, html)) return;
 
     // id
@@ -736,15 +755,16 @@ class InlineSettingsApplication extends FormApplication {
     // make html from input
     /** @type {String} */
     let compiledTemplate = settingsEntry({
-      name: name,
-      safeName: safeName,
-      url: url,
-      compat: compat,
-      icon: icon,
-      width: width,
-      height: height,
-      customCSS: customCSS,
-      id: id,
+      name,
+      safeName,
+      url,
+      compat,
+      icon,
+      width,
+      height,
+      customCSS,
+      id,
+      properties,
     });
 
     html.find("#entryList").append(compiledTemplate);

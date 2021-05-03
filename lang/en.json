@@ -24,7 +24,8 @@
         "icon": "Icon",
         "width": "Width",
         "height": "Height",
-        "removedElements": "Removed Elements"
+        "removedElements": "Removed Elements",
+        "properties": "Iframe HTML Properties"
       }
     },
     "confirmExit": {
@@ -79,7 +80,9 @@
         "removed": "Removed Elements",
         "removedDescA": "This textbox only appears if compat mode is on. Any css selector (eg",
         "removedDescB": "you put in here will be hidden in the webviewer. This is because some things won't dissapear when compatibility mode is on because cookies don't work well with it.",
-        "removeSeparator": "Selectors are seperated by commas!"
+        "removeSeparator": "Selectors are seperated by commas!",
+        "properties": "HTML Properties",
+        "propertiesDesc": "These properties are HTML tags that will be added to the iframe element, eg:"
       }
     },
     "urlShare": {

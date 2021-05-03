@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 3.0.2
+
+* Add option to add HTML properties to the iframe element.
+* Bugfix.
+
 ## Version 3.0.1
 
 * Re-add 0.7 compatibility.

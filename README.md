@@ -33,8 +33,9 @@ You can also use this in a macro, it functions the same as the popup, but can be
  * @param {String} name - title of application
  * @param {String} customCSS - css selectors for elements to be removed, comma seperated
  * @param {String[]} userList - array of user id's to which the webview gets send, if empty it sends to everyone
+ * @param {String} properties - string of html element properties to add to the iframe element
  */
-window.Ardittristan.InlineViewer.sendUrl(url, compat = false, w = 512, h = 512, name, customCSS, userList)
+window.Ardittristan.InlineViewer.sendUrl(url, compat = false, w = 512, h = 512, name, customCSS, userList, properties)
 ```
 
 ### As a journal
