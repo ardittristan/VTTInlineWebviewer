@@ -144,7 +144,7 @@ Hooks.once("init", () => {
           url: data.url.trim(),
           compat: data.compat || false,
           customCSS: data.customcss,
-          properties: data.properties
+          properties: data.properties,
         }).render(true);
       }
     }
@@ -162,6 +162,40 @@ Hooks.on("renderInlineViewer", (inlineViewer) => {
   }
   jQuery(".inline-viewer").css("background-color", game.settings.get("inlinewebviewer", "webviewColor"));
 });
+
+Hooks.on(
+  "renderJournalSheet",
+  /**
+   * @param  {JournalSheet} journalSheet
+   * @param  {JQuery} html
+   * @param  {Object} data
+   */
+  function (journalSheet, html, data) {
+    let frame = html.find(".inlineViewerFrame");
+    if (frame.length === 1) {
+      let frameEl = frame[0];
+      frame.append(`
+        <${a + b + c + d + e + f}
+          ${frameEl.dataset.is ? 'is="' + frameEl.dataset.is + '"' : ""}
+          id="${frameEl.id}"
+          width="100%"
+          height="100%"
+          ${frameEl.dataset.src ? 'src="' + frameEl.dataset.src + '"' : ""}
+          style="border: none;"
+          ${frameEl.dataset.customcss ? 'data-customcss="' + frameEl.dataset.customcss + '"' : ""}
+          >
+        </${a + b + c + d + e + f}>
+      `);
+      frameEl.id = "";
+
+      setTimeout(() => {
+        html.find(".editor-content").css("display", "");
+        html.find(".tox-tinymce").remove();
+        html.find("button[name=submit]").remove();
+      }, 1000);
+    }
+  }
+);
 
 Hooks.on("getSceneControlButtons", (controls) => {
   let privateSettings = game.data.version.includes("0.7.")
@@ -219,7 +253,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
         url: setting.url.trim(),
         compat: setting.compat || false,
         customCSS: setting.customcss,
-        properties: setting.properties
+        properties: setting.properties,
       });
 
       // add to button list
@@ -305,34 +339,32 @@ class InlineViewer extends Application {
     const siteUrl = this.options.url;
     const safeUrl = this.options.url.match(/https?:\/\/.*?(\/|$)/)[0].replace(safeRegex, "");
     const customCSS = encodeURIComponent(this.options.customCSS);
-
+    const content = this.options.compat
+      ? `
+<p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
+  <div
+    class="inlineViewerFrame"
+    data-is="x-${b + c + d + e + f}-bypass"
+    id="${safeUrl}"
+    style="top:0;bottom:0;left:0;right:0;position:absolute;"
+    data-src="https://cors-anywhere.ardittristan.xyz:9123/vtt/${siteUrl}"
+    data-customcss="${customCSS}">
+  </div>
+</p>`
+      : `
+<p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
+  <div
+    class="inlineViewerFrame"
+    id="${safeUrl}"
+    style="top:0;bottom:0;left:0;right:0;position:absolute;"
+    data-src="${siteUrl}">
+  </div>
+</p>
+`;
     JournalEntry.create(
       {
         name: safeUrl,
-        content: this.options.compat
-          ? `
-<p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
-  <${a + b + c + d + e + f}
-    is="x-${b + c + d + e + f}-bypass"
-    id="${safeUrl}"
-    width="100%"
-    height="100%"
-    src="https://cors-anywhere.ardittristan.xyz:9123/vtt/${siteUrl}"
-    style="border: none;"
-    data-customcss="${customCSS}">
-  </${a + b + c + d + e + f}>
-</p>`
-          : `
-<p style="top: 0; bottom: 0; left: 0; right: 0; position: absolute;">
-  <${a + b + c + d + e + f}
-    id="${safeUrl}"
-    width="100%"
-    height="100%"
-    src="${siteUrl}"
-    style="border: none;">
-  </${a + b + c + d + e + f}>
-</p>
-`,
+        content,
       },
       {
         renderSheet: true,
@@ -361,7 +393,7 @@ class InlineViewer extends Application {
                   w: this.options.width,
                   h: this.options.height,
                   customCSS: this.options.customCSS,
-                  properties: this.options.properties
+                  properties: this.options.properties,
                 }).render(true);
               },
             },
@@ -508,7 +540,16 @@ class UrlShareDialog extends FormApplication {
 
     this.close();
 
-    this.sendUrl(formData.shareUrl, formData.shareCompat, formData.shareWidth, formData.shareHeight, formData.shareName, formData.shareCustomCSS, userList, formData.shareProperties);
+    this.sendUrl(
+      formData.shareUrl,
+      formData.shareCompat,
+      formData.shareWidth,
+      formData.shareHeight,
+      formData.shareName,
+      formData.shareCustomCSS,
+      userList,
+      formData.shareProperties
+    );
   }
 
   /**
@@ -542,7 +583,7 @@ class UrlShareDialog extends FormApplication {
         url: url.trim(),
         compat: compat || false,
         customCSS: customCSS,
-        properties: properties
+        properties: properties,
       }).render(true);
     }
   }
