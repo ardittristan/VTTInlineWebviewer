@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 3.1.0
+
+- Add youtube support.
+
 ## Version 3.0.3
 
 - Hopefully fix export to journal.

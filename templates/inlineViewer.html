@@ -1,4 +1,18 @@
-{{#if extensionInstalled}}
+{{#if isYoutube}}
+
+<div class="frame">
+  <{{{antiAVG}}}
+    id="{{safeUrl}}"
+    width="100%"
+    height="100%"
+    src="https://www.youtube.com/embed/{{youtubeId}}?autoplay=1&modestbranding=1&showinfo=0&rel=0&iv_load_policy=3&fs=0"
+    style="border: none;"
+    frameborder="0"
+    {{{properties}}}>
+  </{{{antiAVG}}}>
+</div>
+
+{{else if extensionInstalled}}
 
 <div class="footer">
   <footer>

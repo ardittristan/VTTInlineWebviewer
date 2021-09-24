@@ -332,6 +332,10 @@ class InlineViewer extends Application {
     data.antiAVG = `${a + b + c + d + e + f}`;
     data.antiAVGBypass = `${b + c + d + e + f}`;
     data.properties = this.options.properties;
+    data.isYoutube = window.Ardittristan.InlineViewer.youtubeUrls.includes(new URL(this.options.url).hostname.replace("www.", ""));
+    data.youtubeId = data.isYoutube
+      ? this.options.url.replace(/^.*(?:(?:youtu\.be\/|v\/|vi\/|u\/\w\/|embed\/)|(?:(?:watch)?\?v(?:i)?=|\&v(?:i)?=))(?<ytId>[^#\&\?]*).*/, "$<ytId>")
+      : "";
     return data;
   }
 
@@ -959,6 +963,15 @@ function insertAfter(newNode, referenceElement) {
 }
 
 Hooks.once("ready", async () => {
+  fetch("https://youtube-domains.ardittristan.workers.dev/")
+    .then((res) => res.json())
+    .then((data) => (window.Ardittristan.InlineViewer.youtubeUrls = data))
+    .catch(() =>
+      fetch(import.meta.url.substring(0, import.meta.url.lastIndexOf("/")) + "/data/youtube-urls.json")
+        .then((res) => res.json())
+        .then((data) => (window.Ardittristan.InlineViewer.youtubeUrls = data))
+    );
+
   if (window.hasIframeCompatibility) {
     let manifest = await (
       await fetch(
@@ -975,3 +988,4 @@ localStorage.setItem("isFoundry", "true");
 window.Ardittristan = window.Ardittristan || {};
 window.Ardittristan.InlineViewer = window.Ardittristan.InlineViewer || {};
 window.Ardittristan.InlineViewer.sendUrl = UrlShareDialog.prototype.sendUrl;
+window.Ardittristan.InlineViewer.youtubeUrls = [];

@@ -2,10 +2,15 @@
   "name": "inlinewebviewer",
   "title": "Inline Webviewer",
   "description": "Have a webpage open inside Foundry, eg an easyzoom map.",
-  "version": "3.0.3",
   "author": "ardittristan#0001",
-  "esmodules": ["inlineviewer.js"],
+  "authors": [],
+  "url": "https://github.com/ardittristan/VTTInlineWebviewer",
+  "flags": {},
+  "version": "3.1.0",
+  "minimumCoreVersion": "0.7.0",
+  "compatibleCoreVersion": "0.8.9",
   "scripts": ["./lib/colorSettingStub.js"],
+  "esmodules": ["inlineviewer.js"],
   "styles": ["./css/inlineviewer.css"],
   "languages": [
     {
@@ -14,10 +19,13 @@
       "path": "lang/en.json"
     }
   ],
+  "packs": [],
+  "system": [],
+  "dependencies": [],
   "socket": true,
-  "url": "https://github.com/ardittristan/VTTInlineWebviewer",
   "manifest": "https://raw.githubusercontent.com/ardittristan/VTTInlineWebviewer/master/module.json",
   "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/latest/download/inline-viewer.zip",
-  "minimumCoreVersion": "0.7.0",
-  "compatibleCoreVersion": "0.8.5"
+  "protected": false,
+  "coreTranslation": false,
+  "library": false
 }

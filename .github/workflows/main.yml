@@ -23,7 +23,7 @@ jobs:
         files: 'module.json'
       env:
         download: https://github.com/${{github.repository}}/releases/download/${{steps.get-version.outputs.version}}/inline-viewer.zip
-    - run: zip -r ./inline-viewer.zip module.json inlineviewer.js css/ lang/ templates/ lib/ docs/                                      # Add folders/files here
+    - run: zip -r ./inline-viewer.zip module.json inlineviewer.js css/ lang/ templates/ lib/ docs/ data/                                      # Add folders/files here
     - name: Create Release                                # Create an additional release for this version
       id: create_versioned_release
       uses: ncipollo/release-action@v1
