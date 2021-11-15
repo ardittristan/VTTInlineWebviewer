@@ -149,6 +149,64 @@ Hooks.once("init", () => {
       }
     }
   });
+
+  Hooks.on('getApplicationHeaderButtons', function (viewer, buttons) {
+    if (viewer.constructor.name !== 'InlineViewer') return;
+    const close = buttons.find(b => b.class === 'close');
+    close.onclick = function() {
+      if (game.settings.get("inlinewebviewer", "confirmExit")) {
+        Dialog.confirm({
+          title: game.i18n.localize("inlineView.confirmExit.title"),
+          content: `<p>${game.i18n.localize("inlineView.confirmExit.content")}</p>`,
+          yes: () => {
+            viewer.close();
+          },
+          defaultYes: false,
+        });
+      } else {
+        viewer.close();
+      }
+    };
+    buttons.unshift(...[
+      ...(() => {
+        if (game.user.isGM) {
+          return [
+            {
+              label: game.i18n.localize("inlineView.headers.share"),
+              class: "share",
+              icon: "fas fa-share-square",
+              onclick: () => {
+                new UrlShareDialog({
+                  url: viewer.options.url,
+                  compat: viewer.options.compat,
+                  w: viewer.options.width,
+                  h: viewer.options.height,
+                  customCSS: viewer.options.customCSS,
+                  properties: viewer.options.properties,
+                }).render(true);
+              },
+            },
+            {
+              label: game.i18n.localize("inlineView.headers.export"),
+              class: "export",
+              icon: "fas fa-book",
+              onclick: () => {
+                Dialog.confirm({
+                  title: game.i18n.localize("inlineView.confirmExport.title"),
+                  content: `<p>${game.i18n.localize("inlineView.confirmExport.content")}</p>`,
+                  yes: () => {
+                    viewer._exportToJournal();
+                  },
+                });
+              },
+            },
+          ];
+        }
+        return buttons;
+      })()
+    ]);
+    return buttons;
+  });
 });
 
 Hooks.on("renderInlineViewer", (inlineViewer) => {
@@ -377,71 +435,6 @@ class InlineViewer extends Application {
   }
 
   /* -------------------------------------------- */
-  /**
-   * @override
-   * @private
-   */
-  _getHeaderButtons() {
-    return [
-      ...(() => {
-        if (game.user.isGM) {
-          return [
-            {
-              label: game.i18n.localize("inlineView.headers.share"),
-              class: "share",
-              icon: "fas fa-share-square",
-              onclick: (ev) => {
-                new UrlShareDialog({
-                  url: this.options.url,
-                  compat: this.options.compat,
-                  w: this.options.width,
-                  h: this.options.height,
-                  customCSS: this.options.customCSS,
-                  properties: this.options.properties,
-                }).render(true);
-              },
-            },
-            {
-              label: game.i18n.localize("inlineView.headers.export"),
-              class: "export",
-              icon: "fas fa-book",
-              onclick: (ev) => {
-                Dialog.confirm({
-                  title: game.i18n.localize("inlineView.confirmExport.title"),
-                  content: `<p>${game.i18n.localize("inlineView.confirmExport.content")}</p>`,
-                  yes: () => {
-                    this._exportToJournal();
-                  },
-                });
-              },
-            },
-          ];
-        }
-        return [];
-      })(),
-      ...[
-        {
-          label: "Close",
-          class: "close",
-          icon: "fas fa-times",
-          onclick: (ev) => {
-            if (game.settings.get("inlinewebviewer", "confirmExit")) {
-              Dialog.confirm({
-                title: game.i18n.localize("inlineView.confirmExit.title"),
-                content: `<p>${game.i18n.localize("inlineView.confirmExit.content")}</p>`,
-                yes: () => {
-                  this.close();
-                },
-                defaultYes: false,
-              });
-            } else {
-              this.close();
-            }
-          },
-        },
-      ],
-    ];
-  }
 }
 
 class HelpPopup extends Application {
