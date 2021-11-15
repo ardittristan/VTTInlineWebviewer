@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 3.1.1
+
+- Improve header buttons, thanks to [@saif-ellafi](https://github.com/saif-ellafi)
+
 ## Version 3.1.0
 
 - Add youtube support.
