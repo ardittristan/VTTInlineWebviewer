@@ -1,0 +1,100 @@
+{
+    "inlineView": {
+      "button": "ウェブビューア",
+      "webviewColor": {
+        "name": "背景色",
+        "hint": "ウェブビューアの背景色を変更します。",
+        "label": "色の選択"
+      },
+      "notifications": {
+        "settingsError": "ウェブビューアの設定に問題があります。フォーマットを確認してください。"
+      },
+      "html": {
+        "compatBox": "互換モード？",
+        "compatDisclaimer": "互換モードでは、プロキシの悪用を防ぐためにドメイン名を記録します。",
+        "extensionDisclaimer": "互換モードで動作しない場合は、以下のリンクをお試しください。 <a target=\"_blank\" href=\"https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension\">extension</a>",
+        "loginDisclaimer": "ログインがうまくいかないことがあります。まず、開発者ツール(F12)を開いた状態でログインしてみてください。そうでなければ、以下のリンクで問題を報告してください。 <a target=\"_blank\" href=\"https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension\">extension github</a>",
+        "settings": {
+          "compat": "Compat",
+          "save": "保存",
+          "cancel": "キャンセル",
+          "compatToggle": "互換モードを切り替える",
+          "name": "名前",
+          "url": "URL",
+          "icon": "アイコン",
+          "width": "幅",
+          "height": "高さ",
+          "removedElements": "要素の除去",
+          "properties": "IframeのHTMLプロパティ"
+        }
+      },
+      "confirmExit": {
+        "name": "終了の確認",
+        "hint": "ビューアウィンドウを閉じる際、確認のプロンプトを表示する。",
+        "title": "よろしいですか？",
+        "content": "本当にこのビューを閉じてもよろしいですか？"
+      },
+      "confirmExport": {
+        "title": "よろしいですか？",
+        "content": "このウェブビューを現在の設定のままジャーナルにエクスポートしますか？"
+      },
+      "menus": {
+        "global": "Global Webviewers",
+        "private": "Private Webviewers",
+        "label": "設定を開く"
+      },
+      "gmShare": {
+        "tools": {
+          "name": "プレイヤーへURLを送信する",
+          "title": "プレイヤーへURLを送信する"
+        },
+        "popup": "GMポップアップ"
+      },
+      "headers": {
+        "share": "シェア",
+        "export": "エクスポート"
+      },
+      "help": {
+        "title": "ヘルプ",
+        "image": "参考画像",
+        "adding": "エントリーの追加",
+        "addingDesc": "下部コンテナに新規ウェブビューアのエントリーを追加することができます。+ボタンをクリックすることで、リストに追加できます。",
+        "add": "追加",
+        "reordering": "エントリーの並べ替え",
+        "reorderingDesc": "エントリーの順番は、ボタンリストに表示される順番と一致しています。ᐱとᐯのボタンで順番を変更することができます。",
+        "datafields": {
+          "title": "データフィールド",
+          "name": "名前 (必須)",
+          "nameDesc": "ウェブビューアのヘッダーに表示される名前と、ボタンの名前を設定します。",
+          "url": "URL(必須)",
+          "urlDesc": "ウェブビューアが読み込むURLを設定します。",
+          "icon": "アイコン",
+          "iconDescA": "ボタンアイコンを設定することができます。",
+          "iconDescB": "のアイコン名が対応しています。(例:",
+          "iconDescC": "と記入すると、以下のアイコンが表示されます。",
+          "dimensions": "幅と高さ",
+          "dimensionsDesc": "ウェブビューアが表示されるときの幅と高さを設定します。",
+          "compat": "compat",
+          "compatDesc": "互換モードを有効にします。このモードでは、ウェブビューアはプロキシを使用します。サイトが正常に機能しない場合に使用できます。",
+          "compatWarn": "悪用を防ぐため、プロキシは訪問したURLを記録することに留意してください。",
+          "removed": "要素の除去",
+          "removedDescA": "このテキストボックスは、互換モードが有効の場合にのみ表示されます。ここに記述したCSSセレクター(例:",
+          "removedDescB": "は、ウェブビューアでは非表示になります。 これは、互換モードがオンになっていると、クッキーがうまく機能しないために消えないものがあるからです。",
+          "removeSeparator": "セレクタはカンマで区切られています!",
+          "properties": "HTMLプロパティ",
+          "propertiesDesc": "これらのプロパティは、iframe要素に追加されるHTMLタグです。 例:"
+        }
+      },
+      "urlShare": {
+        "title": "URLを送信する"
+      },
+      "settings": {
+        "title": "ウェブビューアの設定",
+        "duplicate": "同じ名前を重複して使用しないようにしてください。"
+      },
+      "extension": {
+        "newVersion": "新しいバージョンが用意されています。"
+      }
+    }
+  }
+  
