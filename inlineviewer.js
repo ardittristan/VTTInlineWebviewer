@@ -256,12 +256,8 @@ Hooks.on(
 );
 
 Hooks.on("getSceneControlButtons", (controls) => {
-  let privateSettings = game.data.version.includes("0.7.")
-    ? game.settings.get("inlinewebviewer", "privateWebviewersNew")?.[0] || []
-    : game.settings.get("inlinewebviewer", "privateWebviewersNew") || [];
-  let settings = game.data.version.includes("0.7.")
-    ? game.settings.get("inlinewebviewer", "webviewersNew")?.[0] || []
-    : game.settings.get("inlinewebviewer", "webviewersNew") || [];
+  let privateSettings = game.settings.get("inlinewebviewer", "privateWebviewersNew") || [];
+  let settings = game.settings.get("inlinewebviewer", "webviewersNew") || [];
 
   // check if settingsstring contains any value
   if (!game.user.isGM && settings.length === 0 && privateSettings.length === 0) {
@@ -335,23 +331,13 @@ Hooks.on("getSceneControlButtons", (controls) => {
   }
 
   // create button list
-  if (game.data.version.includes("0.7.")) {
-    controls.push({
-      name: "webviews",
-      title: "inlineView.button",
-      layer: "ControlsLayer",
-      icon: "far fa-window-maximize",
-      tools: tools,
-    });
-  } else {
-    controls.push({
-      name: "webviews",
-      title: "inlineView.button",
-      layer: "controls",
-      icon: "far fa-window-maximize",
-      tools: tools,
-    });
-  }
+  controls.push({
+    name: "webviews",
+    title: "inlineView.button",
+    layer: "controls",
+    icon: "far fa-window-maximize",
+    tools: tools,
+  });
 });
 
 class InlineViewer extends Application {
@@ -569,7 +555,7 @@ class UrlShareDialog extends FormApplication {
       customcss: customCSS,
       userList: userList,
     });
-    if (userList === undefined || userList.length === 0 || userList.includes(game.user._id)) {
+    if (userList === undefined || userList.length === 0 || userList.includes(game.user.id) || userList.includes(game.user._id)) {
       new InlineViewer({
         baseApplication: name.trim(),
         classes: [name.trim().replace(" ", "-")],
@@ -625,9 +611,7 @@ class InlineSettingsApplication extends FormApplication {
 
   async getData(options) {
     const data = super.getData(options);
-    data.entries = game.data.version.includes("0.7.")
-      ? game.settings.get("inlinewebviewer", this.settingIdentifier)?.[0] || []
-      : game.settings.get("inlinewebviewer", this.settingIdentifier) || [];
+    data.entries = game.settings.get("inlinewebviewer", this.settingIdentifier) || [];
 
     return data;
   }

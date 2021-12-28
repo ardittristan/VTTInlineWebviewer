@@ -1,5 +1,11 @@
 # Patch Notes
 
+## Version 3.2.0
+
+- Fix v9 api issue.
+
+- **Drop support for Foundry 0.7 and earlier**
+
 ## Version 3.1.1
 
 - Improve header buttons, thanks to [@saif-ellafi](https://github.com/saif-ellafi)
