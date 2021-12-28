@@ -1,5 +1,12 @@
-import { insertAfter } from "../inlineviewer.js";
+import { insertAfter, safeRegex } from "../inlineviewer.js";
 import { HelpPopup } from "./HelpPopup.js";
+
+/** @type {Handlebars.Template} */
+export let settingsEntry;
+
+Hooks.once("init", async () => {
+  settingsEntry = await getTemplate("modules/inlinewebviewer/templates/partials/settingsEntry.html");
+});
 
 export class InlineSettingsApplication extends FormApplication {
   constructor(object, options) {

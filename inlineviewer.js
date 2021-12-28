@@ -2,8 +2,6 @@ import "./settings.js";
 import { InlineViewer } from "./modules/InlineViewer.js";
 import { UrlShareDialog } from "./modules/UrlShareDialog.js";
 
-/** @type {Handlebars.Template} */
-export let settingsEntry;
 export const safeRegex = /[~!@$%^&*()+=,./';:"?><[\]\\{}|`# ]/g;
 // to not have AVG false positives
 export const a = "i";
@@ -14,10 +12,6 @@ export const e = "m";
 export const f = "e";
 
 Hooks.once("init", () => {
-  (async () => {
-    settingsEntry = await getTemplate("modules/inlinewebviewer/templates/partials/settingsEntry.html");
-  })();
-
   // listen for iframes
   window.addEventListener("message", (e) => {
     if (typeof e.data !== "string") return;
