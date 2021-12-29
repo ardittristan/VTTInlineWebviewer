@@ -28,7 +28,7 @@ Hooks.once("init", () => {
   // socket
   game.socket.on("module.inlinewebviewer", (data) => {
     if (data.name && data.url) {
-      if (data.userList === undefined || data.userList.length === 0 || data.userList.includes(game.user._id)) {
+      if (data.userList === undefined || data.userList.length === 0 || data.userList.includes(game.user.id) || data.userList.includes(game.user._id)) {
         new InlineViewer({
           baseApplication: data.name.trim(),
           classes: [data.name.trim().replace(" ", "-")],

@@ -1,5 +1,6 @@
 import { InlineSettingsApplication } from "./modules/InlineSettingsApplication.js";
 import { PrivateInlineSettingsApplication } from "./modules/PrivateInlineSettingsApplication.js";
+// import { SceneViewerSettingsApplication } from "./modules/SceneViewerSettingsApplication.js";
 
 Hooks.once("init", () => {
   game.settings.register("inlinewebviewer", "webviewers", {
@@ -56,16 +57,17 @@ Hooks.once("init", () => {
     default: false,
   });
 
-  game.settings.register("inlinewebviewer", "sceneViewers", {
-    scope: "world",
-    config: false,
-    type: Object,
-    default: {},
-  });
+  // game.settings.register("inlinewebviewer", "sceneViewers", {
+  //   scope: "world",
+  //   config: false,
+  //   type: Object,
+  //   default: {},
+  // });
 
   // game.settings.registerMenu("inlinewebviewer", "createScene", {
   //   name: "inlineView.menus.createScene",
   //   label: "inlineView.menus.createSceneLabel",
+  //   type: SceneViewerSettingsApplication,
   //   restricted: true,
   // });
 

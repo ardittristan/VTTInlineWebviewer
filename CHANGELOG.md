@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 3.2.1
+
+- Fix another v9 api issue.
+- Split up code for better readability.
+
 ## Version 3.2.0
 
 - Fix v9 api issue.

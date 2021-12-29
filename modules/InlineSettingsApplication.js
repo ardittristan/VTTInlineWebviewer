@@ -2,7 +2,7 @@ import { insertAfter, safeRegex } from "../inlineviewer.js";
 import { HelpPopup } from "./HelpPopup.js";
 
 /** @type {Handlebars.Template} */
-export let settingsEntry;
+let settingsEntry;
 
 Hooks.once("init", async () => {
   settingsEntry = await getTemplate("modules/inlinewebviewer/templates/partials/settingsEntry.html");
