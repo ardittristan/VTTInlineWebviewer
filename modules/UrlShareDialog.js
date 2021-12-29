@@ -1,4 +1,5 @@
 import { HelpPopup } from "./HelpPopup.js";
+import { InlineViewer } from "./InlineViewer.js";
 
 export class UrlShareDialog extends FormApplication {
   constructor(options) {
