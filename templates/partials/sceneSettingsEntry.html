@@ -1,0 +1,21 @@
+<div class="settingsEntry" id="{{this.id}}-Entry">
+  <div class="buttons">
+    <button type="button" class="deleteButton"><i class="far fa-trash-alt"></i></button>
+  </div>
+
+  <div class="fields">
+    <div>
+      <input type="text" placeholder="{{localize "inlineView.html.settings.name"}}" value="{{this.name}}" data-name disabled />
+      <input type="text" placeholder="{{localize "inlineView.html.settings.id"}}*" id="{{this.id}}-ID" name="{{this.name}}-ID" required value="{{this.id}}" />
+
+      <label class="compatLabel" for="{{this.id}}-Compat">{{localize "inlineView.html.settings.compat"}}</label>
+      <input type="checkbox" id="{{this.id}}-Compat" name="{{this.name}}-Compat" title="{{localize "inlineView.html.settings.compatToggle"}}" {{checked this.compat}} />
+    </div>
+
+    <input type="text" placeholder="{{localize "inlineView.html.settings.url"}}*" id="{{this.id}}-Url" name="{{this.name}}-Url" required value="{{this.url}}" />
+
+    <textarea placeholder="{{localize "inlineView.html.settings.removedElements"}}" id="{{this.id}}-CustomCSS" name="{{this.name}}-CustomCSS">{{this.customCSS}}{{this.customcss}}</textarea>
+
+    <input type="text" placeholder="{{localize "inlineView.html.settings.properties"}}" id="{{this.id}}-Properties" name="{{this.name}}-Properties" value="{{this.properties}}" />
+  </div>
+</div>

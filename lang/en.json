@@ -25,7 +25,9 @@
         "width": "Width",
         "height": "Height",
         "removedElements": "Removed Elements",
-        "properties": "Iframe HTML Properties"
+        "properties": "Iframe HTML Properties",
+        "id": "Scene id",
+        "sceneHint": "Create new scene"
       }
     },
     "confirmExit": {
@@ -41,7 +43,8 @@
     "menus": {
       "global": "Global Webviewers",
       "private": "Private Webviewers",
-      "label": "Open Settings"
+      "label": "Open Settings",
+      "scene": "Scene Webviewers"
     },
     "gmShare": {
       "tools": {

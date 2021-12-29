@@ -15,18 +15,49 @@
   border: none;
 }
 
+/* scene window */
+
+#inlineViewerBoard {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column-reverse;
+  z-index: calc(var(--z-index-canvas) + 1);
+  background-color: #00000088;
+}
+
+#inlineViewerBoard .frame {
+  width: 100%;
+  height: 100%;
+}
+
+#inlineViewerBoard .footer {
+  width: 100%;
+  z-index: calc(var(--z-index-canvas) + 2);
+  background: url(/ui/parchment.jpg) repeat;
+}
+
+#inlineViewerBoard .footer footer {
+  margin: 0 auto;
+  width: max-content;
+}
+
 /* settings window */
 
+#inline-viewer-scene-settings,
 #inline-viewer-settings {
   min-height: 216px;
   min-width: 400px;
 }
 
+#inline-viewer-scene-settings .header-button.help .far,
 #inline-viewer-settings .header-button.help .far,
 .webviewer-dialog .header-button.help .far {
   margin-right: 3px;
 }
 
+#inline-viewer-scene-settings .buttonContainer,
 #inline-viewer-settings .buttonContainer {
   display: flex;
   position: absolute;
@@ -35,6 +66,8 @@
   background: url(/ui/parchment.jpg) repeat;
 }
 
+#inline-viewer-scene-settings .settingsContainer #newEntry,
+#inline-viewer-scene-settings .settingsContainer #entryList .settingsEntry,
 #inline-viewer-settings .settingsContainer #newEntry,
 #inline-viewer-settings .settingsContainer #entryList .settingsEntry {
   border: solid 1px #00000045;
@@ -43,10 +76,12 @@
   padding: 2px;
 }
 
+#inline-viewer-scene-settings .settingsContainer #entryList,
 #inline-viewer-settings .settingsContainer #entryList {
   flex-direction: column;
 }
 
+#inline-viewer-scene-settings .settingsContainer #newEntry,
 #inline-viewer-settings .settingsContainer #newEntry {
   bottom: 46px;
   width: calc(100% - 16px);
@@ -54,6 +89,7 @@
   background: url(/ui/parchment.jpg) repeat;
 }
 
+#inline-viewer-scene-settings .settingsContainer .divider,
 #inline-viewer-settings .settingsContainer .divider {
   width: calc(100% + 16px);
   height: 156px;
@@ -64,6 +100,7 @@
   margin-right: 8px;
 }
 
+#inline-viewer-scene-settings textarea,
 #inline-viewer-settings textarea,
 .webviewer-dialog textarea {
   resize: vertical;
@@ -73,30 +110,36 @@
   padding: 1px 3px;
 }
 
+#inline-viewer-scene-settings textarea::placeholder,
 #inline-viewer-settings textarea::placeholder,
 .webviewer-dialog textarea::placeholder {
   color: #4b4a44;
   opacity: 1;
 }
 
+#inline-viewer-scene-settings textarea:focus,
 #inline-viewer-settings textarea:focus,
 .webviewer-dialog textarea:focus {
   outline: none;
   box-shadow: 0 0 5px red;
 }
 
-#inline-viewer-settings textarea[id$=CustomCSS],
+#inline-viewer-scene-settings textarea[id$="CustomCSS"],
+#inline-viewer-settings textarea[id$="CustomCSS"],
 .webviewer-dialog textarea#shareCustomCSS {
   width: calc(100% - 2px);
   display: var(--compatDisplay);
 }
 
+#inline-viewer-scene-settings .settingsContainer > div,
+#inline-viewer-scene-settings .settingsContainer > div .settingsEntry,
 #inline-viewer-settings .settingsContainer > div,
 #inline-viewer-settings .settingsContainer > div .settingsEntry {
   display: flex;
   width: 100%;
 }
 
+#inline-viewer-scene-settings .settingsContainer .fields,
 #inline-viewer-settings .settingsContainer .fields,
 .webviewer-dialog .input {
   display: flex;
@@ -104,31 +147,37 @@
   width: 100%;
 }
 
+#inline-viewer-scene-settings .settingsContainer .fields input,
 #inline-viewer-settings .settingsContainer .fields input,
 .webviewer-dialog .input input {
   margin-bottom: 2px;
 }
 
+#inline-viewer-scene-settings .settingsContainer .fields > div,
 #inline-viewer-settings .settingsContainer .fields > div,
 .webviewer-dialog .input > div {
   display: flex;
   padding-right: 2px;
 }
 
+#inline-viewer-scene-settings .settingsContainer .fields > div input:not(:last-child),
 #inline-viewer-settings .settingsContainer .fields > div input:not(:last-child),
 .webviewer-dialog .input > div input:not(:last-child) {
   margin-right: 4px;
 }
 
+#inline-viewer-scene-settings .settingsContainer .settingsEntry:not(:last-child),
 #inline-viewer-settings .settingsContainer .settingsEntry:not(:last-child) {
   margin-bottom: 2px;
 }
 
+#inline-viewer-scene-settings .settingsContainer .compatLabel,
 #inline-viewer-settings .settingsContainer .compatLabel,
 .webviewer-dialog .input .compatLabel {
   line-height: 24px;
 }
 
+#inline-viewer-scene-settings .settingsContainer .buttons,
 #inline-viewer-settings .settingsContainer .buttons {
   padding-top: 26px;
   border-right: solid 1px #0000002e;
@@ -142,10 +191,22 @@
   position: relative;
 }
 
+#inline-viewer-scene-settings .settingsContainer .buttons button,
 #inline-viewer-settings .settingsContainer .buttons button {
   height: 26px;
   width: 26px;
   line-height: 22px;
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-weight: bold;
+}
+
+#inline-viewer-scene-settings #createSceneButton {
+  height: 24px;
+  width: 24px;
+  margin-left: -26px;
+  margin-top: 1px;
+  border: none;
+  line-height: 20px;
   font-family: "Modesto Condensed", "Palatino Linotype", serif;
   font-weight: bold;
 }
@@ -155,15 +216,19 @@
   font-size: medium;
 }
 
+#inline-viewer-scene-settings #createSceneButton,
+#inline-viewer-scene-settings .settingsContainer .buttons #addButton,
 #inline-viewer-settings .settingsContainer .buttons #addButton {
   font-size: x-large;
 }
 
+#inline-viewer-scene-settings .settingsContainer .buttons .deleteButton,
 #inline-viewer-settings .settingsContainer .buttons .deleteButton {
   top: 0;
   position: absolute;
 }
 
+#inline-viewer-scene-settings .settingsContainer .buttons .deleteButton .fa-trash-alt,
 #inline-viewer-settings .settingsContainer .buttons .deleteButton .fa-trash-alt {
   margin-left: -1px;
   margin-right: 0;

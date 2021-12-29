@@ -1,0 +1,39 @@
+<form>
+  <div class="settingsContainer">
+    <!-- prettier-ignore -->
+    <div id="entryList">
+      {{#each entries}}
+        {{> modules/inlinewebviewer/templates/partials/sceneSettingsEntry.html this}}
+      {{/each}}
+    </div>
+
+    <div class="divider"></div>
+
+    <div id="newEntry">
+      <div class="buttons">
+        <button type="button" id="addButton">+</button>
+      </div>
+
+      <div class="fields">
+        <div>
+          <input type="text" placeholder="{{localize "inlineView.html.settings.name"}}" data-name disabled />
+          <input type="text" placeholder="{{localize "inlineView.html.settings.id"}}*" id="newEntry-ID" />
+          <button type="button" id="createSceneButton" title="{{localize "inlineView.html.settings.sceneHint"}}">+</button>
+
+          <label class="compatLabel" for="newEntry-Compat">{{localize "inlineView.html.settings.compat"}}</label>
+          <input type="checkbox" title="{{localize "inlineView.html.settings.compatToggle"}}" id="newEntry-Compat" />
+        </div>
+
+        <input type="text" placeholder="{{localize "inlineView.html.settings.url"}}*" id="newEntry-Url" />
+
+        <textarea placeholder="{{localize "inlineView.html.settings.removedElements"}}" id="newEntry-CustomCSS"></textarea>
+
+        <input type="text" placeholder="{{localize "inlineView.html.settings.properties"}}" id="newEntry-Properties" />
+      </div>
+    </div>
+  </div>
+  <div class="buttonContainer">
+    <button type="submit">{{localize "inlineView.html.settings.save"}}</button>
+    <button id="cancelButton" type="button">{{localize "inlineView.html.settings.cancel"}}</button>
+  </div>
+</form>

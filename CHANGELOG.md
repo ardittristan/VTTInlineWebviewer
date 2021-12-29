@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 3.3.0
+
+- Add support for scene webviewers.
+
 ## Version 3.2.1
 
 - Fix another v9 api issue.
