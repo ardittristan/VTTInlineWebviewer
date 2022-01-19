@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 3.3.1
+
+- Add forgotten import.
+
 ## Version 3.3.0
 
 - Add support for scene webviewers.

@@ -1,4 +1,5 @@
 import { a, b, c, d, e, f, safeRegex } from "../inlineviewer.js";
+import { UrlShareDialog } from "./UrlShareDialog.js";
 
 export class InlineViewer extends Application {
   constructor(src, options = {}) {
