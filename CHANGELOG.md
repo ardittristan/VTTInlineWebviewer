@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 3.4.0
+
+- Add initial experimental implementation of scene control in a webviewer scene.
+
 ## Version 3.3.1
 
 - Add forgotten import.

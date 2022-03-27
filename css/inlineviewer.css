@@ -17,13 +17,17 @@
 
 /* scene window */
 
+:root {
+  --inlineviewer-experimental-scene-control: 0;
+}
+
 #inlineViewerBoard {
   position: absolute;
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column-reverse;
-  z-index: calc(var(--z-index-canvas) + 1);
+  z-index: calc(var(--z-index-canvas) + 1 - 2 * var(--inlineviewer-experimental-scene-control));
   background-color: #00000088;
 }
 
@@ -41,6 +45,36 @@
 #inlineViewerBoard .footer footer {
   margin: 0 auto;
   width: max-content;
+}
+
+#inlineViewerBoardToggleContainer {
+  position: absolute;
+  z-index: calc(var(--z-index-ui) + 1);
+  background-image: inherit;
+  color: white;
+  padding: 10px 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#inlineViewerBoardToggleContainer:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -32px;
+  height: 32px;
+  background-image: inherit;
+  width: 32px;
+  border-bottom-right-radius: 5px;
+}
+
+#inlineViewerBoardToggle {
+  position: absolute;
+  z-index: calc(var(--z-index-ui) + 2);
+  top: 38px;
+}
+
+#inlineViewerBoardToggle:not(:checked) ~ #board {
+  pointer-events: none;
 }
 
 /* settings window */

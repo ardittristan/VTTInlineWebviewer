@@ -11,6 +11,13 @@ export const d = "a";
 export const e = "m";
 export const f = "e";
 
+Hooks.on("canvasConfig", (config) => {
+  if (game.settings.get("inlinewebviewer", "experimentalControllableScene")) {
+    config.transparent = undefined;
+    document.querySelector(":root").style.setProperty("--inlineviewer-experimental-scene-control", "1");
+  }
+});
+
 Hooks.once("init", () => {
   // listen for iframes
   window.addEventListener("message", (e) => {

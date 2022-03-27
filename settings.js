@@ -64,6 +64,15 @@ Hooks.once("init", () => {
     default: {},
   });
 
+  game.settings.register("inlinewebviewer", "experimentalControllableScene", {
+    scope: "world",
+    config: true,
+    type: Boolean,
+    default: false,
+    name: "Enable experimental scene control",
+    hint: "If you don't want to see the grid set it's opacity to 0, background also best at color #000000",
+  });
+
   game.settings.registerMenu("inlinewebviewer", "sceneSettings", {
     name: "inlineView.menus.scene",
     label: "inlineView.menus.label",
