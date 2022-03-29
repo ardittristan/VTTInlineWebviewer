@@ -47,7 +47,7 @@ Webviewers can be exported to journals by gms with a button at the top of the po
 * If the site disallows embedding in iframes you can try enabling compatibility mode, compatibility mode might not fully fix the issue and logs domain names to prevent abuse.
 * Another option is to install [this browser extension](https://github.com/ardittristan/FoundryVTT-Inline-Webviewer-Extension), which works better than compatibility mode and doesn't log anything.
 
-* AVG and Avast flag the foundry module for iframe injection. This is probably because it utilizes iframes a lot. To still use the module you should whitelist <!-- insert_js_url_start -->[inlineviewer.js](https://www.virustotal.com/gui/file-analysis/NGFlNmVmZWIyYTE4NjVlM2YwMmRlMDUxMWYzYzcwMzc6MTY0MDc4NDY3Ng==/detection)<!-- insert_js_url_end --> and <!-- insert_html_url_start -->[inlineviewer.html](https://www.virustotal.com/gui/file-analysis/NzFiZDAyZDZiZjNlNDc2YTU3ZDBiYTUzMmU2NzE5N2Y6MTY0MDc4NDY3Ng==/detection)<!-- insert_html_url_end -->
+* AVG and Avast flag the foundry module for iframe injection. This is probably because it utilizes iframes a lot. To still use the module you should whitelist <!-- insert_js_url_start -->[inlineviewer.js](https://www.virustotal.com/gui/file-analysis/NGZjNjIzZGM5Njk4MTg2NjJlZTVhZDZiODY1N2ExM2U6MTY0ODQyMjQ3MQ==/detection)<!-- insert_js_url_end --> and <!-- insert_html_url_start -->[inlineviewer.html](https://www.virustotal.com/gui/file-analysis/NzFiZDAyZDZiZjNlNDc2YTU3ZDBiYTUzMmU2NzE5N2Y6MTY0ODQyMjQ3Mg==/detection)<!-- insert_html_url_end -->
 
 ## Example
 

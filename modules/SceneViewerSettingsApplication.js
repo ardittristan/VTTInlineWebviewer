@@ -5,6 +5,7 @@ import { InlineViewer } from "./InlineViewer.js";
 let settingsEntry;
 /** @type {Handlebars.Template} */
 let inlineViewerTemplate;
+let changedAlpha = false;
 
 Hooks.once("init", async () => {
   settingsEntry = await getTemplate("modules/inlinewebviewer/templates/partials/sceneSettingsEntry.html");
@@ -244,7 +245,11 @@ export class SceneViewerSettingsApplication extends FormApplication {
 Hooks.on("canvasInit", async (canvas) => {
   if (Object.keys(game.settings.get("inlinewebviewer", "sceneViewers") || {}).includes(canvas?.scene?.id || "_")) {
     if (jQuery("body > #inlineViewerBoard").length === 0) jQuery('<div id="inlineViewerBoard"></div>').insertAfter(jQuery("#board"));
-    console.log(jQuery("body > #inlineViewerBoard").length);
+    if (game.settings.get("inlinewebviewer", "experimentalControllableScene") && jQuery("body > #inlineViewerBoardToggle").length === 0)
+      jQuery('<input type="checkbox" id="inlineViewerBoardToggle">').insertBefore(jQuery("#board"));
+    if (game.settings.get("inlinewebviewer", "experimentalControllableScene") && jQuery("body > #inlineViewerBoardToggleContainer").length === 0)
+      jQuery(`<div id="inlineViewerBoardToggleContainer">${game.i18n.localize("Toggle scene control")}</div>`).insertBefore(jQuery("#board"));
+
     const settings = game.settings.get("inlinewebviewer", "sceneViewers")[canvas.scene.id];
     let viewer = new InlineViewer({
       baseApplication: "InlineViewerCanvas",
@@ -257,7 +262,31 @@ Hooks.on("canvasInit", async (canvas) => {
     let data = await viewer.getData();
     let html = inlineViewerTemplate(data);
     document.querySelector("#inlineViewerBoard").innerHTML = html;
-  } else if (jQuery("body > #inlineViewerBoard").length >= 0) {
-    jQuery("body > #inlineViewerBoard").remove();
+  } else {
+    if (jQuery("body > #inlineViewerBoard").length > 0) {
+      jQuery("body > #inlineViewerBoard").remove();
+    }
+    if (jQuery("body > #inlineViewerBoardToggleContainer").length > 0) {
+      jQuery("body > #inlineViewerBoardToggleContainer").remove();
+    }
+    if (jQuery("body > #inlineViewerBoardToggle").length > 0) {
+      jQuery("body > #inlineViewerBoardToggle").remove();
+    }
+  }
+});
+
+Hooks.on("canvasReady", async (canvas) => {
+  if (game.settings.get("inlinewebviewer", "experimentalControllableScene")) {
+    if (Object.keys(game.settings.get("inlinewebviewer", "sceneViewers") || {}).includes(canvas?.scene?.id || "_")) {
+      changedAlpha = true;
+      canvas.app.renderer.backgroundAlpha = 0;
+      canvas.effects.lighting.illumination.sbackground.alpha = canvas.effects.lighting.illumination.background.alpha = 0;
+    } else if (jQuery("body > #inlineViewerBoard").length >= 0) {
+      if (changedAlpha) {
+        changedAlpha = false;
+        canvas.app.renderer.backgroundAlpha = 1;
+        canvas.effects.lighting.illumination.sbackground.alpha = canvas.effects.lighting.illumination.background.alpha = 1;
+      }
+    }
   }
 });
