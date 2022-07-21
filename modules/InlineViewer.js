@@ -118,6 +118,7 @@ Hooks.on("getApplicationHeaderButtons", function (viewer, buttons) {
                   h: viewer.options.height,
                   customCSS: viewer.options.customCSS,
                   properties: viewer.options.properties,
+                  name: viewer.options.title,
                 }).render(true);
               },
             },

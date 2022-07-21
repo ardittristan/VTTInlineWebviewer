@@ -188,7 +188,14 @@ Hooks.once("ready", async () => {
       fetch(import.meta.url.substring(0, import.meta.url.lastIndexOf("/")) + "/data/youtube-urls.json")
         .then((res) => res.json())
         .then((data) => (window.Ardittristan.InlineViewer.youtubeUrls = data))
-    );
+    )
+    .then(() => {
+      if (window.Ardittristan.InlineViewer.youtubeUrls === null) {
+        fetch(import.meta.url.substring(0, import.meta.url.lastIndexOf("/")) + "/data/youtube-urls.json")
+          .then((res) => res.json())
+          .then((data) => (window.Ardittristan.InlineViewer.youtubeUrls = data));
+      }
+    });
 
   if (window.hasIframeCompatibility) {
     let manifest = await (

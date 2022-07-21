@@ -24,10 +24,10 @@
     {{#each users}}
     <tr>
       <td>
-        <input type="checkbox" id="share{{this._id}}" name="shareCheckbox{{this._id}}" data-userid="{{this._id}}" data-dtype="Checkbox" {{checked "compat"}} />
+        <input type="checkbox" id="share{{this.id}}" name="shareCheckbox{{this.id}}" data-userid="{{this.id}}" data-dtype="Checkbox" {{checked "compat"}} />
       </td>
       <td>
-        <label for="share{{this._id}}">{{this.name}}</label>
+        <label for="share{{this.id}}">{{this.name}}</label>
       </td>
     </tr>
     {{/each}}
