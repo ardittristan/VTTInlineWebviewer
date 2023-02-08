@@ -23,13 +23,15 @@ Hooks.once("init", () => {
   window.addEventListener("message", (e) => {
     if (typeof e.data !== "string") return;
 
-    let element = $(`iframe#${e.data}`);
+    try {
+      let element = $(`iframe#${e.data}`);
 
-    if (!(element.length > 0)) return;
+      if (!(element.length > 0)) return;
 
-    element.each(function () {
-      this.contentWindow.postMessage(this.dataset.customcss, "*");
-    });
+      element.each(function () {
+        this.contentWindow.postMessage(this.dataset.customcss, "*");
+      });
+    } catch {}
   });
 
   // socket
@@ -53,39 +55,41 @@ Hooks.once("init", () => {
   });
 });
 
-Hooks.on(
-  "renderJournalSheet",
-  /**
-   * @param  {JournalSheet} journalSheet
-   * @param  {JQuery} html
-   * @param  {Object} data
-   */
-  function (journalSheet, html, data) {
-    let frame = html.find(".inlineViewerFrame");
-    if (frame.length === 1) {
-      let frameEl = frame[0];
-      frame.append(`
+/**
+ * @param  {JournalSheet} journalSheet
+ * @param  {JQuery} html
+ * @param  {Object} data
+ */
+function renderJournalSheet(journalSheet, html, data) {
+  let frame = html.find(".inlineViewerFrame");
+  if (frame.length === 0) return;
+
+  html.parent().filter(".journal-entry-page.text").css("position", "unset");
+  frame.each(function () {
+    frame.first().append(`
         <${a + b + c + d + e + f}
-          ${frameEl.dataset.is ? 'is="' + frameEl.dataset.is + '"' : ""}
-          id="${frameEl.id}"
+          ${this.dataset.is ? 'is="' + this.dataset.is + '"' : ""}
+          id="${this.id}"
           width="100%"
           height="100%"
-          ${frameEl.dataset.src ? 'src="' + frameEl.dataset.src + '"' : ""}
+          ${this.dataset.src ? 'src="' + this.dataset.src + '"' : ""}
           style="border: none;"
-          ${frameEl.dataset.customcss ? 'data-customcss="' + frameEl.dataset.customcss + '"' : ""}
+          ${this.dataset.customcss ? 'data-customcss="' + this.dataset.customcss + '"' : ""}
           >
         </${a + b + c + d + e + f}>
       `);
-      frameEl.id = "";
+    this.id = "";
+  });
 
-      setTimeout(() => {
-        html.find(".editor-content").css("display", "");
-        html.find(".tox-tinymce").remove();
-        html.find("button[name=submit]").remove();
-      }, 1000);
-    }
-  }
-);
+  setTimeout(() => {
+    html.find(".editor-content").css("display", "");
+    html.find(".tox-tinymce").remove();
+    html.find("button[name=submit]").remove();
+  }, 1000);
+}
+
+Hooks.on("renderJournalSheet", renderJournalSheet);
+Hooks.on("renderJournalTextPageSheet", renderJournalSheet);
 
 Hooks.on("getSceneControlButtons", (controls) => {
   let privateSettings = game.settings.get("inlinewebviewer", "privateWebviewersNew") || [];

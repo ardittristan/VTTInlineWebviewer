@@ -280,12 +280,12 @@ Hooks.on("canvasReady", async (canvas) => {
     if (Object.keys(game.settings.get("inlinewebviewer", "sceneViewers") || {}).includes(canvas?.scene?.id || "_")) {
       changedAlpha = true;
       canvas.app.renderer.backgroundAlpha = 0;
-      canvas.effects.lighting.illumination.sbackground.alpha = canvas.effects.lighting.illumination.background.alpha = 0;
+      canvas.effects.illumination.background.alpha = 0;
     } else if (jQuery("body > #inlineViewerBoard").length >= 0) {
       if (changedAlpha) {
         changedAlpha = false;
         canvas.app.renderer.backgroundAlpha = 1;
-        canvas.effects.lighting.illumination.sbackground.alpha = canvas.effects.lighting.illumination.background.alpha = 1;
+        canvas.effects.illumination.background.alpha = 1;
       }
     }
   }

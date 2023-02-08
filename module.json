@@ -10,9 +10,9 @@
     ],
     "url": "https://github.com/ardittristan/VTTInlineWebviewer",
     "flags": {},
-    "version": "3.4.2",
+    "version": "3.4.3",
     "minimumCoreVersion": "9",
-    "compatibleCoreVersion": "9",
+    "compatibleCoreVersion": "10",
     "compatibility": {
         "minimum": "9",
         "verified": "10"

@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 3.4.3
+
+- Fix journal webviews not working.
+
 ## Version 3.4.0
 
 - Add initial experimental implementation of scene control in a webviewer scene.
