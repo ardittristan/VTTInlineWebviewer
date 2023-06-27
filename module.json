@@ -47,7 +47,7 @@
     },
     "socket": true,
     "manifest": "https://raw.githubusercontent.com/ardittristan/VTTInlineWebviewer/master/module.json",
-    "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/download/3.4.2/inline-viewer.zip",
+    "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/download/3.4.3/inline-viewer.zip",
     "protected": false,
     "coreTranslation": false,
     "library": false
