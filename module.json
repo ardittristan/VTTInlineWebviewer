@@ -10,12 +10,12 @@
     ],
     "url": "https://github.com/ardittristan/VTTInlineWebviewer",
     "flags": {},
-    "version": "3.4.3",
+    "version": "3.4.4",
     "minimumCoreVersion": "9",
-    "compatibleCoreVersion": "10",
+    "compatibleCoreVersion": "11",
     "compatibility": {
         "minimum": "9",
-        "verified": "10"
+        "verified": "11"
     },
     "scripts": [
         "./lib/colorSettingStub.js"
@@ -47,7 +47,7 @@
     },
     "socket": true,
     "manifest": "https://raw.githubusercontent.com/ardittristan/VTTInlineWebviewer/master/module.json",
-    "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/download/3.4.2/inline-viewer.zip",
+    "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/download/3.4.4/inline-viewer.zip",
     "protected": false,
     "coreTranslation": false,
     "library": false
