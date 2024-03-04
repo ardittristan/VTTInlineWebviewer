@@ -44,7 +44,7 @@ Hooks.once("init", () => {
           width: data.width || 512,
           height: data.height || 512,
           minimizable: true,
-          title: game.i18n.localize("inlineView.gmShare.popup"),
+          title: data.name.trim() == false ? game.i18n.localize("inlineView.gmShare.popup") : data.name.trim(),
           url: data.url.trim(),
           compat: data.compat || false,
           customCSS: data.customcss,

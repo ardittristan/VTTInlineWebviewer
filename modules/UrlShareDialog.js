@@ -120,7 +120,7 @@ export class UrlShareDialog extends FormApplication {
         width: w || 512,
         height: h || 512,
         minimizable: true,
-        title: game.i18n.localize("inlineView.gmShare.popup"),
+        title: name.trim() == false ? game.i18n.localize("inlineView.gmShare.popup") : name.trim(),
         url: url.trim(),
         compat: compat || false,
         customCSS: customCSS,

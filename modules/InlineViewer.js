@@ -138,7 +138,7 @@ Hooks.on("getApplicationHeaderButtons", function (viewer, buttons) {
             },
           ];
         }
-        return buttons;
+        return [];
       })(),
     ]
   );
