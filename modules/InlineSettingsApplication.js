@@ -1,3 +1,4 @@
+import { mergeObject } from "./compat.js";
 import { insertAfter, safeRegex } from "../inlineviewer.js";
 import { HelpPopup } from "./HelpPopup.js";
 

@@ -1,3 +1,5 @@
+import { mergeObject } from "./compat.js";
+
 export class HelpPopup extends Application {
   static get defaultOptions() {
     const options = super.defaultOptions;

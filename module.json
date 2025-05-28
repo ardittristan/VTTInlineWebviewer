@@ -1,54 +1,49 @@
 {
-    "name": "inlinewebviewer",
-    "title": "Inline Webviewer",
-    "description": "Have a webpage open inside Foundry, eg an easyzoom map.",
-    "author": "ardittristan#0001",
-    "authors": [
-        {
-            "name": "ardittristan#0001"
-        }
-    ],
-    "url": "https://github.com/ardittristan/VTTInlineWebviewer",
-    "flags": {},
-    "version": "3.4.5",
-    "minimumCoreVersion": "9",
-    "compatibleCoreVersion": "11",
-    "compatibility": {
-        "minimum": "9",
-        "verified": "11"
+  "name": "inlinewebviewer",
+  "id": "inlinewebviewer",
+  "title": "Inline Webviewer",
+  "description": "Have a webpage open inside Foundry, eg an easyzoom map.",
+  "author": "ardittristan#0001",
+  "authors": [
+    {
+      "name": "ardittristan#0001"
+    }
+  ],
+  "url": "https://github.com/ardittristan/VTTInlineWebviewer",
+  "flags": {},
+  "version": "3.4.6",
+  "minimumCoreVersion": "9",
+  "compatibleCoreVersion": "13",
+  "compatibility": {
+    "minimum": "9",
+    "verified": "13"
+  },
+  "scripts": ["./lib/colorSettingStub.js"],
+  "esmodules": ["inlineviewer.js"],
+  "styles": ["./css/inlineviewer.css"],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
     },
-    "scripts": [
-        "./lib/colorSettingStub.js"
-    ],
-    "esmodules": [
-        "inlineviewer.js"
-    ],
-    "styles": [
-        "./css/inlineviewer.css"
-    ],
-    "languages": [
-        {
-            "lang": "en",
-            "name": "English",
-            "path": "lang/en.json"
-        },
-        {
-            "lang": "ja",
-            "name": "日本語",
-            "path": "lang/ja.json"
-        }
-    ],
-    "packs": [],
-    "system": [],
-    "dependencies": [],
-    "relationships": {
-        "systems": [],
-        "requires": []
-    },
-    "socket": true,
-    "manifest": "https://raw.githubusercontent.com/ardittristan/VTTInlineWebviewer/master/module.json",
-    "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/download/3.4.5/inline-viewer.zip",
-    "protected": false,
-    "coreTranslation": false,
-    "library": false
+    {
+      "lang": "ja",
+      "name": "日本語",
+      "path": "lang/ja.json"
+    }
+  ],
+  "packs": [],
+  "system": [],
+  "dependencies": [],
+  "relationships": {
+    "systems": [],
+    "requires": []
+  },
+  "socket": true,
+  "manifest": "https://raw.githubusercontent.com/ardittristan/VTTInlineWebviewer/master/module.json",
+  "download": "https://github.com/ardittristan/VTTInlineWebviewer/releases/download/3.4.6/inline-viewer.zip",
+  "protected": false,
+  "coreTranslation": false,
+  "library": false
 }

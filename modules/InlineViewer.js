@@ -1,3 +1,4 @@
+import { mergeObject } from "./compat.js";
 import { a, b, c, d, e, f, safeRegex } from "../inlineviewer.js";
 import { UrlShareDialog } from "./UrlShareDialog.js";
 

@@ -102,6 +102,8 @@ Hooks.on("getSceneControlButtons", (controls) => {
 
   // init tools array for buttons
   let tools = [];
+  if (!Array.isArray(controls))
+    tools = {};
 
   // get seperate arrays of sites
   if (privateSettings.length != 0) {
@@ -114,8 +116,20 @@ Hooks.on("getSceneControlButtons", (controls) => {
   try {
     // add gm option to send url to everyone
     if (game.user.isGM) {
-      tools = tools.concat([
-        {
+      if (Array.isArray(controls))
+        tools = tools.concat([
+          {
+            name: game.i18n.localize("inlineView.gmShare.tools.name"),
+            title: game.i18n.localize("inlineView.gmShare.tools.title"),
+            icon: "fas fa-upload",
+            button: true,
+            onClick: () => {
+              new UrlShareDialog().render(true);
+            },
+          },
+        ]);
+      else
+        tools[game.i18n.localize("inlineView.gmShare.tools.name")] = {
           name: game.i18n.localize("inlineView.gmShare.tools.name"),
           title: game.i18n.localize("inlineView.gmShare.tools.title"),
           icon: "fas fa-upload",
@@ -123,8 +137,7 @@ Hooks.on("getSceneControlButtons", (controls) => {
           onClick: () => {
             new UrlShareDialog().render(true);
           },
-        },
-      ]);
+        }
     }
 
     for (let setting of settings) {
@@ -147,15 +160,26 @@ Hooks.on("getSceneControlButtons", (controls) => {
       });
 
       // add to button list
-      tools = tools.concat([
-        {
+      if (Array.isArray(controls)) {
+        tools = tools.concat([
+          {
+            name: setting.name.trim(),
+            title: setting.name.trim(),
+            icon: setting.icon || "fas fa-external-link-alt",
+            button: true,
+            onClick: () => webView.render(true),
+          },
+        ]);
+      }
+      else {
+        tools[setting.name.trim()] = {
           name: setting.name.trim(),
           title: setting.name.trim(),
           icon: setting.icon || "fas fa-external-link-alt",
           button: true,
           onClick: () => webView.render(true),
-        },
-      ]);
+        }
+      }
     }
   } catch (e) {
     if (privateSettings.length != 0 || settings.length != 0) {
@@ -167,13 +191,34 @@ Hooks.on("getSceneControlButtons", (controls) => {
   }
 
   // create button list
-  controls.push({
-    name: "webviews",
-    title: "inlineView.button",
-    layer: "controls",
-    icon: "far fa-window-maximize",
-    tools: tools,
-  });
+  if (Array.isArray(controls))
+    controls.push({
+      name: "webviews",
+      title: "inlineView.button",
+      layer: "controls",
+      icon: "far fa-window-maximize",
+      tools: tools,
+    });
+  else {
+    tools.none = {
+      name: "none",
+      title: "none",
+      icon: "webviewer-hidden"
+    }
+    controls.webviews = {
+      name: "webviews",
+      activeTool: "none",
+      title: "inlineView.button",
+      layer: "controls",
+      icon: "far fa-window-maximize",
+      tools: tools,
+      onChange: (...args) => {
+        console.log(args)
+      },
+      onToolChange: (...args) => { console.log(args)}
+    };
+    console.log(tools, controls)
+  }
 });
 
 /**

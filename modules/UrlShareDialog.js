@@ -1,3 +1,4 @@
+import { mergeObject } from "./compat.js";
 import { HelpPopup } from "./HelpPopup.js";
 import { InlineViewer } from "./InlineViewer.js";
 
