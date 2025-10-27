@@ -71,7 +71,7 @@ export class InlineViewer extends Application {
   </div>
 </p>
 `;
-    if (window.game?.data?.release?.generation >= 13) {
+    if (window.game?.data?.release?.generation >= 12) {
       JournalEntry.create(
         {
           name: safeUrl,
